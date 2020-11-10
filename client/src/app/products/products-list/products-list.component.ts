@@ -2,14 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@an
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
-import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
-import { FuseUtils } from '@fuse/utils';
 
 import { ProductService } from 'app/products/product.service';
-import { takeUntil } from 'rxjs/operators';
+import { Product } from '../models/product';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -32,16 +31,9 @@ export class ProductsListComponent implements OnInit
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
-    // Private
-    private _unsubscribeAll: Subject<any>;
-
     constructor(
         private _productService: ProductService
-    )
-    {
-        // Set the private defaults
-        this._unsubscribeAll = new Subject();
-    }
+    ) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -53,28 +45,12 @@ export class ProductsListComponent implements OnInit
     ngOnInit(): void
     {
         this.dataSource = new FilesDataSource(this._productService, this.sort);
-
-        fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if ( !this.dataSource )
-                {
-                    return;
-                }
-
-                this.dataSource.filter = this.filter.nativeElement.value;
-            });
     }
 }
 
 export class FilesDataSource extends DataSource<any>
 {
-    private _filterChange = new BehaviorSubject('');
-    private _filteredDataChange = new BehaviorSubject('');
+    public products: Product[] = [];
 
     /**
      * Constructor
@@ -89,8 +65,6 @@ export class FilesDataSource extends DataSource<any>
     )
     {
         super();
-
-        this.filteredData = this._productService.getProducts();
     }
 
     /**
@@ -100,53 +74,12 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._productService.getProducts();
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    // Filtered data
-    get filteredData(): any
-    {
-        return this._filteredDataChange.value;
-    }
-
-    set filteredData(value: any)
-    {
-        this._filteredDataChange.next(value);
-    }
-
-    // Filter
-    get filter(): string
-    {
-        return this._filterChange.value;
-    }
-
-    set filter(filter: string)
-    {
-        this._filterChange.next(filter);
+        return this._productService.getProducts().pipe(map(data => this.products = data));
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Filter data
-     *
-     * @param data
-     * @returns {any}
-     */
-    filterData(data): any
-    {
-        if ( !this.filter )
-        {
-            return data;
-        }
-        return FuseUtils.filterArrayByString(data, this.filter);
-    }
 
     /**
      * Sort data
