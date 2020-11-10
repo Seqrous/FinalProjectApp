@@ -21,7 +21,7 @@ import { takeUntil } from 'rxjs/operators';
 export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
-    displayedColumns = ['id', 'image', 'name', 'category', 'price', 'quantity', 'active'];
+    displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -173,17 +173,11 @@ export class FilesDataSource extends DataSource<any>
                 case 'name':
                     [propertyA, propertyB] = [a.name, b.name];
                     break;
-                case 'categories':
-                    [propertyA, propertyB] = [a.categories[0], b.categories[0]];
-                    break;
                 case 'price':
                     [propertyA, propertyB] = [a.priceTaxIncl, b.priceTaxIncl];
                     break;
                 case 'quantity':
                     [propertyA, propertyB] = [a.quantity, b.quantity];
-                    break;
-                case 'active':
-                    [propertyA, propertyB] = [a.active, b.active];
                     break;
             }
 

@@ -42,7 +42,7 @@ namespace server.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async void Update(Product product)
+        public void Update(Product product)
         {
             _context.Entry(product).State = EntityState.Modified;
         }
