@@ -1,0 +1,25 @@
+<div id="cards" class="page-layout simple fullwidth">
+    <div class="content">
+        <div class="cards">
+            <div class="card">
+                <div class="card-preview">
+                    <div class="fuse-card">
+                        <div class="p-16">
+                            <div class="h1">{{ card.title }}</div>
+                        </div>
+
+                        <img clas='card-image' src="{{ card.imageUrl }}" />
+
+                        <div
+                            class="p-16"
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                        >
+                            <button mat-button color="accent">Shop now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

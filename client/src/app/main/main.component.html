@@ -1,0 +1,31 @@
+<div id="main-page" class="page-layout simple full-width full-height">
+  <div>
+    <img class='main-image-top center' src="../../assets/images/main/winter.jpg">
+    <div class="main-content" fusePerfectScrollbar>
+    
+      <!-- <h2>{{'SAMPLE.HELLO' | translate}}</h2>
+    
+      <h2 *ngIf="(_authService.currentUser$ | async) as user">{{ user.name }}</h2> -->
+
+      <!-- CATEGORY GRID -->
+
+      <div class='category-grid'>
+        
+        <div id='category-row-1' fxLayout="row">
+
+          <fuse-card *ngFor="let title of cardTitles" class='m-16' [title]="title"></fuse-card>
+
+        </div>
+
+        <div id='category-row-2' fxLayout="row">
+
+          <fuse-card *ngFor="let title of cardTitles" class='m-16' [title]="title"></fuse-card>
+
+        </div>
+      </div>
+        
+      <!-- /CATEGORY GRID -->
+      
+    </div>
+  </div>
+</div>
