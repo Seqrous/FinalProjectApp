@@ -4,6 +4,7 @@ import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsViewComponent } from './products-view/products-view.component';
 import { ProductsListComponent } from './products-list/products-list.component';
+import { ProductsFiltersComponent } from './products-filters/products-filters.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +33,7 @@ import { FuseDemoModule, FuseSidebarModule } from '@fuse/components';
     ProductsComponent,
     ProductsViewComponent,
     ProductsListComponent,
+    ProductsFiltersComponent,
   ]
 })
 export class ProductsModule { }
