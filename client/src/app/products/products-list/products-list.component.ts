@@ -74,7 +74,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._productService.getProducts().pipe(map(data => this.products = data));
+        return this._productService.getProducts(null).pipe(map(data => this.products = data));
     }
 
     // -----------------------------------------------------------------------------------------------------
