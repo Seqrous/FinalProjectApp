@@ -54,17 +54,17 @@ export class ProductsListComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.setFilters();
-        this.dataSource = new FilesDataSource(this._productService, this.sort, this.filters);
+        this.loadProducts();
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
 
-    private setFilters(): any {
+    private loadProducts(): void {
         this._route.queryParams.subscribe(res => {
             this.filters = res as ProductQuery;
+            this.dataSource = new FilesDataSource(this._productService, this.sort, this.filters);
         });
     }
 }
