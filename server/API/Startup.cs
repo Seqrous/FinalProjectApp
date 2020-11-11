@@ -29,6 +29,7 @@ namespace API
             services.AddApplicationServices(_config);
             services.AddControllers();
             services.AddIdentityServices(_config);
+            services.AddHealthChecks();
             
         }
 
@@ -47,6 +48,8 @@ namespace API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseHealthChecks("/healthcheck");
 
             app.UseEndpoints(endpoints =>
             {
