@@ -10,6 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { ProductService } from 'app/products/product.service';
 import { Product } from '../models/product';
 import { ActivatedRoute } from '@angular/router';
+import { ProductQuery } from '../models/product-query';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -21,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
-    filters: any = {};
+    filters: ProductQuery;
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
 
     @ViewChild(MatPaginator, {static: true})
@@ -63,7 +64,7 @@ export class ProductsListComponent implements OnInit
 
     private setFilters(): any {
         this._route.queryParams.subscribe(res => {
-            this.filters.name = res['name'] ? res['name'] : '';
+            this.filters = res as ProductQuery;
         });
     }
 }
@@ -82,7 +83,7 @@ export class FilesDataSource extends DataSource<any>
     constructor(
         private _productService: ProductService,
         private _matSort: MatSort,
-        private filters,
+        private filters: ProductQuery,
     )
     {
         super();
@@ -96,7 +97,10 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._productService.getProducts(this.filters).pipe(map(data => this.products = data));
+        return this._productService.getProducts(Object.assign(
+            {},
+            this.filters,
+        )).pipe(map(data => this.products = data));
     }
 
     // -----------------------------------------------------------------------------------------------------
