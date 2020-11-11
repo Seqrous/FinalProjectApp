@@ -9,6 +9,7 @@ import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
 import { Product } from '../models/product';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -20,6 +21,7 @@ import { Product } from '../models/product';
 export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
+    filters: any = {};
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
 
     @ViewChild(MatPaginator, {static: true})
@@ -31,8 +33,15 @@ export class ProductsListComponent implements OnInit
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
+    /**
+     * Constructor 
+     * 
+     * @param _productService 
+     * @param _route 
+     */
     constructor(
-        private _productService: ProductService
+        private _productService: ProductService,
+        private _route: ActivatedRoute,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -44,7 +53,18 @@ export class ProductsListComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._productService, this.sort);
+        this.setFilters();
+        this.dataSource = new FilesDataSource(this._productService, this.sort, this.filters);
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private methods
+    // -----------------------------------------------------------------------------------------------------
+
+    private setFilters(): any {
+        this._route.queryParams.subscribe(res => {
+            this.filters.name = res['name'] ? res['name'] : '';
+        });
     }
 }
 
@@ -61,10 +81,12 @@ export class FilesDataSource extends DataSource<any>
      */
     constructor(
         private _productService: ProductService,
-        private _matSort: MatSort
+        private _matSort: MatSort,
+        private filters,
     )
     {
         super();
+        this.filters = filters;
     }
 
     /**
@@ -74,7 +96,7 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._productService.getProducts(null).pipe(map(data => this.products = data));
+        return this._productService.getProducts(this.filters).pipe(map(data => this.products = data));
     }
 
     // -----------------------------------------------------------------------------------------------------
