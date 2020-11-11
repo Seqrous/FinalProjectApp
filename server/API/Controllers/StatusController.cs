@@ -15,7 +15,7 @@ namespace API.Controllers
         [Route("/ping")]
         public IActionResult Get()
         {
-            return Ok(DateTime.UtcNow + "  Running");
+            return Ok(DateTime.UtcNow + "  Running "); 
         }
 
 
