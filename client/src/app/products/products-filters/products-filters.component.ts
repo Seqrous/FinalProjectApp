@@ -12,10 +12,13 @@ export class ProductsFiltersComponent implements OnInit {
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   
   form: FormGroup;
+
+  conditionsList: any;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
+    this.loadData();
     this.createForm();
   }
 
@@ -23,14 +26,7 @@ export class ProductsFiltersComponent implements OnInit {
     this.form = this.formBuilder.group({
       minPrice: [],
       maxPrice: [],
-      condition: new FormArray([
-        new FormControl(true),
-        new FormControl(false)
-      ]),
-      manufacturer: new FormArray([
-        new FormControl(true),
-        new FormControl(false)
-      ]),
+      conditions: this.formBuilder.array([])
     });
   }
 
@@ -38,4 +34,27 @@ export class ProductsFiltersComponent implements OnInit {
     this.onSearch.emit(this.form.value);
   }
 
+  loadData(): void {
+    this.conditionsList = [
+      { name: 'New',  value: 'new' },
+      { name: 'Used', value: 'used' },
+    ];
+  }
+
+  onCheckboxChange(e): void {
+    const conditions: FormArray = this.form.get('conditions') as FormArray;
+  
+    if (e.checked) {
+      conditions.push(new FormControl(e.source.id));
+    } else {
+      let i = 0;
+      conditions.controls.forEach((item: FormControl) => {
+        if (item.value == e.source.id) {
+          conditions.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
 }

@@ -28,7 +28,6 @@ export class ProductsViewComponent
     // -----------------------------------------------------------------------------------------------------
 
     refresh(params: ProductQuery): void {
-        console.log(params);
         this.queryParams = params;
     }
 
