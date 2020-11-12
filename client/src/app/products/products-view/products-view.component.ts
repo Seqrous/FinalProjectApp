@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { ProductQuery } from '../models/product-query';
 
 @Component({
     selector   : 'fuse-products-view',
@@ -9,6 +10,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 })
 export class ProductsViewComponent 
 {
+    queryParams = new ProductQuery();
+
     /**
      * Constructor
      *
@@ -23,6 +26,11 @@ export class ProductsViewComponent
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
+    refresh(params: ProductQuery): void {
+        console.log(params);
+        this.queryParams = params;
+    }
 
     /**
      * Toggle sidebar

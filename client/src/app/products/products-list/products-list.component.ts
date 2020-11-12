@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
@@ -22,8 +22,10 @@ import { ProductQuery } from '../models/product-query';
 export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
-    filters: ProductQuery;
+    nameFilter: string;
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
+
+    @Input() queryParams: ProductQuery;
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -63,8 +65,9 @@ export class ProductsListComponent implements OnInit
 
     private loadProducts(): void {
         this._route.queryParams.subscribe(res => {
-            this.filters = res as ProductQuery;
-            this.dataSource = new FilesDataSource(this._productService, this.sort, this.filters);
+            this.nameFilter = res['name'];
+            this.queryParams.name = this.nameFilter;
+            this.dataSource = new FilesDataSource(this._productService, this.sort, this.queryParams);
         });
     }
 }
@@ -83,11 +86,11 @@ export class FilesDataSource extends DataSource<any>
     constructor(
         private _productService: ProductService,
         private _matSort: MatSort,
-        private filters: ProductQuery,
+        private queryParams: ProductQuery,
     )
     {
         super();
-        this.filters = filters;
+        this.queryParams = queryParams;
     }
 
     /**
@@ -99,7 +102,7 @@ export class FilesDataSource extends DataSource<any>
     {
         return this._productService.getProducts(Object.assign(
             {},
-            this.filters,
+            this.queryParams,
         )).pipe(map(data => this.products = data));
     }
 
