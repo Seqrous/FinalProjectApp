@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'fuse-products-filters',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsFiltersComponent implements OnInit {
 
-  constructor() { }
+  formFilters: FormGroup;
+  
+  constructor(private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.createForm();
+  }
+
+  private createForm(): void {
+    this.formFilters = this.formBuilder.group({
+      minPrice: [],
+      maxPrice: [],
+    });
   }
 
 }
