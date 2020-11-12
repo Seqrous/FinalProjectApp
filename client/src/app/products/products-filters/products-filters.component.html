@@ -32,11 +32,12 @@
     <div id='condition-filter'>
       <h2 class='title'>Condition</h2>
         
-      <form class='form' name="form" [formGroup]='form'>
-        <section class="section" formControlName="condition">
+      <form class='form' name="form" [formGroup]="form" *ngIf="conditionsList">
+        <section class="section">
           <div fxLayout="column">
-            <mat-checkbox class="example-margin">New</mat-checkbox>
-            <mat-checkbox class="example-margin">Used</mat-checkbox>
+            <div *ngFor="let condition of conditionsList; let i=index">
+              <mat-checkbox id="{{ conditionsList[i].name }}" (change)="onCheckboxChange($event)">{{ conditionsList[i].name }}</mat-checkbox>
+            </div>
           </div>
           </section>
       </form>     
