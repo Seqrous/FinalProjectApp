@@ -31,7 +31,7 @@
 
           <!-- SIDEBAR CONTENT -->
           <div class="content p-24" fusePerfectScrollbar>
-              <fuse-products-filters></fuse-products-filters>
+              <fuse-products-filters (onSearch)="refresh($event)"></fuse-products-filters>
           </div>
           <!-- / SIDEBAR CONTENT -->
 
@@ -43,7 +43,7 @@
 
           <!-- CONTENT -->
           <div class="content p-24">
-            <fuse-products-list></fuse-products-list>
+            <fuse-products-list [queryParams]='queryParams'></fuse-products-list>
           </div>
           <!-- / CONTENT -->
 

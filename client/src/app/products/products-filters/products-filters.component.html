@@ -8,17 +8,17 @@
       <h2 class='title'>Price</h2>
       <div fxLayout="row" fxLayoutGap="16px">
 
-        <form class='form' name="filtersForm" [formGroup]='formFilters'>
+        <form class='form' name="form" [formGroup]='form'>
           <mat-form-field appearance="legacy">
             <mat-label>Min. Price</mat-label>
             <input matInput formControlName='minPrice'>
           </mat-form-field>
         </form>
 
-        <form class='form' name="filtersForm" [formGroup]='formFilters'>
+        <form class='form' name="form" [formGroup]='form'>
           <mat-form-field appearance="legacy">
             <mat-label>Max. Price</mat-label>
-            <input matInput formControlName='minPrice'>
+            <input matInput formControlName='maxPrice'>
           </mat-form-field>
         </form>
 
@@ -32,13 +32,14 @@
     <div id='condition-filter'>
       <h2 class='title'>Condition</h2>
         
-      <section class="section">
-        <div fxLayout="column">
-          <mat-checkbox class="example-margin">New</mat-checkbox>
-          <mat-checkbox class="example-margin">Used</mat-checkbox>
-        </div>
-        </section>
-              
+      <form class='form' name="form" [formGroup]='form'>
+        <section class="section" formControlName="condition">
+          <div fxLayout="column">
+            <mat-checkbox class="example-margin">New</mat-checkbox>
+            <mat-checkbox class="example-margin">Used</mat-checkbox>
+          </div>
+          </section>
+      </form>     
     </div>
         
     <!-- /Condition filter -->
@@ -48,7 +49,7 @@
     <div id='manufacturer-filter'>
       <h2 class='title'>Manufacturer</h2>
 
-      <section class="section">
+      <section class="section" fromControlName="condition">
         <div fxLayout="column">
           <mat-checkbox class="example-margin">Manufacturer 1</mat-checkbox>
           <mat-checkbox class="example-margin">Manufacturer 2</mat-checkbox>
@@ -63,7 +64,7 @@
     <br>
     <div fxLayout="row">
       <button mat-button fuseWidgetToggle>Clear</button>
-      <button mat-raised-button color="accent">Search</button>
+      <button mat-raised-button color="accent" (click)="search()">Search</button>
     </div>
 
   </div>
