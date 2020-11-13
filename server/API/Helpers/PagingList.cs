@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using server.API.DTOs.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
