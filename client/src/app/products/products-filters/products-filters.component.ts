@@ -12,17 +12,31 @@ export class ProductsFiltersComponent implements OnInit {
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   
   form: FormGroup;
-
   conditionsList: any;
   manufacturerList: any;
-  formArrayTypes: [];
   
+  /**
+   * Constructor
+   * 
+   * @param formBuilder 
+   */
   constructor(private formBuilder: FormBuilder) {}
 
+  // -----------------------------------------------------------------------------------------------------
+  // @ Lifecycle hooks
+  // -----------------------------------------------------------------------------------------------------
+
+  /**
+   * OnInit
+   */
   ngOnInit(): void {
     this.loadData();
     this.createForm();
   }
+
+  // -----------------------------------------------------------------------------------------------------
+  // @ Private methods
+  // -----------------------------------------------------------------------------------------------------
 
   private createForm(): void {
     this.form = this.formBuilder.group({
@@ -33,11 +47,7 @@ export class ProductsFiltersComponent implements OnInit {
     });
   }
 
-  search(): void {
-    this.onSearch.emit(this.form.value);
-  }
-
-  loadData(): void {
+  private loadData(): void {
     this.conditionsList = [
       { name: 'New',  value: 'new' },
       { name: 'Used', value: 'used' },
@@ -50,7 +60,19 @@ export class ProductsFiltersComponent implements OnInit {
     ];
   }
 
-  onCheckboxChange(e): void {
+  // -----------------------------------------------------------------------------------------------------
+  // @ Public methods
+  // -----------------------------------------------------------------------------------------------------
+
+  search(): void {
+    this.onSearch.emit(this.form.value);
+  }
+
+  /**
+   * Add/remove value of a filter when checked/unchecked
+   * 
+   */
+  onCheckboxChange(e: any): void {
     const filterType = e.source.id as string;
     const filterName = filterType.split('-', 1)[0]; // conditions/manufacturers
     const filterValue = filterType.split('-', 2)[1]; // new/used

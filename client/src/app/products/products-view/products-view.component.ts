@@ -15,8 +15,9 @@ export class ProductsViewComponent
 
     /**
      * Constructor
-     *
-     * @param {FuseSidebarService} _fuseSidebarService
+     * 
+     * @param _fuseSidebarService 
+     * @param _router 
      */
     constructor(
         private _fuseSidebarService: FuseSidebarService,
@@ -30,6 +31,11 @@ export class ProductsViewComponent
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    /**
+     * Append filter parameters to url and redirect
+     * 
+     * @param params 
+     */
     refresh(params: ProductQuery): void {
         this.queryParams = params;
         this._router.navigate(['/products'], { queryParams: this.queryParams });
