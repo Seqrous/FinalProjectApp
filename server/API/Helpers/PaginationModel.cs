@@ -1,5 +1,8 @@
 ﻿namespace API.Helpers
+<<<<<<< HEAD
 
+=======
+>>>>>>> fixed comments for products
 {
     public class PaginationModel
     {
