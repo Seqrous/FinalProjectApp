@@ -29,14 +29,14 @@
 
     <!-- Condition filter -->
 
-    <div id='condition-filter'>
+    <div id='condition-filter' *ngIf="conditionsList && conditionsList.length !== 0">
       <h2 class='title'>Condition</h2>
         
-      <form class='form' name="form" [formGroup]="form" *ngIf="conditionsList">
+      <form class='form' name="form" [formGroup]="form">
         <section class="section">
           <div fxLayout="column">
             <div *ngFor="let condition of conditionsList; let i=index">
-              <mat-checkbox id="conditions-{{ conditionsList[i].name }}" (change)="onCheckboxChange($event)">{{ conditionsList[i].name }}</mat-checkbox>
+              <mat-checkbox id="conditions-{{ conditionsList[i].value }}" (change)="onCheckboxChange($event)">{{ conditionsList[i].name }}</mat-checkbox>
             </div>
           </div>
           </section>
@@ -47,19 +47,18 @@
 
     <!-- Manufacturer filter -->
 
-    <div id='manufacturer-filter'>
+    <div id='manufacturer-filter' *ngIf="manufacturerList && manufacturerList.length !== 0">
       <h2 class='title'>Manufacturer</h2>
 
-      <form class='form' name='form' [formGroup]="form" *ngIf="manufacturerList">
+      <form class='form' name='form' [formGroup]="form">
         <section class="section">
           <div fxLayout="column">
             <div *ngFor="let manufacturer of manufacturerList; let i=index">
-              <mat-checkbox id="manufacturers-{{ manufacturerList[i].name }}" (change)="onCheckboxChange($event)">{{ manufacturerList[i].name }}</mat-checkbox>
+              <mat-checkbox id="manufacturers-{{ manufacturerList[i].value }}" (change)="onCheckboxChange($event)">{{ manufacturerList[i].name }}</mat-checkbox>
             </div>
           </div>
         </section>
       </form>
-      
     </div>
 
     <!-- /Manufacturer filter -->

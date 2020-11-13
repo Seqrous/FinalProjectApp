@@ -47,7 +47,7 @@ export class ProductsFiltersComponent implements OnInit {
       { name: 'Manufacturer 1', value: 'manufacturer1'},
       { name: 'Manufacturer 2', value: 'manufacturer2'},
       { name: 'Manufacturer 3', value: 'manufacturer3'},
-    ]
+    ];
   }
 
   onCheckboxChange(e): void {
