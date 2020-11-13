@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using API.Helpers;
 using Microsoft.EntityFrameworkCore;
 using server.API.Interfaces;
 
@@ -32,9 +33,12 @@ namespace server.API.Data
         {
             return await _context.Products.FindAsync(name);
         }
-        public async Task<IEnumerable<Product>> GetAllProductsAsync() 
+        public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
-            return await _context.Products.ToListAsync();
+            //return await _context.Products.ToListAsync();
+            var products = _context.Products.AsQueryable();
+            return await PagingList<Product>.CreateList(products, productParams.PageNumber,productParams.PageSize);
+
         }
 
         public async Task<bool> SaveAllAsync()
