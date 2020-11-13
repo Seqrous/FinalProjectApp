@@ -25,7 +25,5 @@ namespace server.API.Interfaces
         Task<Product> GetProductByNameAsync(string name);
         // get all available products
         Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
-
-
     }
 }
