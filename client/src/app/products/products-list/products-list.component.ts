@@ -35,10 +35,11 @@ export class ProductsListComponent implements OnInit
     filter: ElementRef;
 
     /**
-     * Constructor 
+     * Constructor
      * 
      * @param _productService 
      * @param _route 
+     * @param _router 
      */
     constructor(
         private _productService: ProductService,
@@ -83,10 +84,10 @@ export class FilesDataSource extends DataSource<any>
 
     /**
      * Constructor
-     *
-     * @param {ProductService} _productService
-     * @param {MatPaginator} _matPaginator
-     * @param {MatSort} _matSort
+     * 
+     * @param _productService 
+     * @param _matSort 
+     * @param queryParams 
      */
     constructor(
         private _productService: ProductService,
