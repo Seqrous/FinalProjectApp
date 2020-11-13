@@ -50,7 +50,7 @@ namespace API
             app.UseAuthorization();
 
 
-            app.UseHealthChecks("/healthcheck");
+            app.UseHealthChecks("/api/healthcheck");
 
             app.UseEndpoints(endpoints =>
             {
