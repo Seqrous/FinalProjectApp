@@ -1,6 +1,8 @@
+using API.Helpers;
+
 namespace server.API.DTOs.Products
 {
-    public class ProductDto
+    public class ProductDto 
     {
         public int Id { get; set; }
         public string Name { get; set; }

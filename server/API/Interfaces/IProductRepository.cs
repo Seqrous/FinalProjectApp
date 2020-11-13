@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Helpers;
 
 namespace server.API.Interfaces
 {
@@ -23,7 +24,7 @@ namespace server.API.Interfaces
         // get product by its Name
         Task<Product> GetProductByNameAsync(string name);
         // get all available products
-        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
 
 
     }

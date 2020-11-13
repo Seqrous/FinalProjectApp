@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
+using API.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using server.API.DTOs.Products;
 using server.API.Interfaces;
 
@@ -45,13 +48,17 @@ namespace server.API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<ProductDto>> FindProducts()
+        public async Task<ActionResult<PagingList<ProductDto>>> FindProducts(PaginationModel productParams)
         {
-            var products = await _productContext.GetAllProductsAsync();
+            var paginatedProducts = await _productContext.GetProductsAsync(productParams);
             
-            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(products);
-            
-            return Ok(productsToReturn);
+            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(paginatedProducts.Items);
+
+            var productToReturnQuery = productsToReturn.AsQueryable();
+
+            var toReturn = PagingList<ProductDto>.CreateList(productToReturnQuery,paginatedProducts.CurrentPage,paginatedProducts.PageSize);
+
+            return Ok(toReturn);
 
         }
     }
