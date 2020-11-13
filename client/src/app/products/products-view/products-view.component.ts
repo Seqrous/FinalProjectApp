@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ProductQuery } from '../models/product-query';
@@ -18,9 +19,11 @@ export class ProductsViewComponent
      * @param {FuseSidebarService} _fuseSidebarService
      */
     constructor(
-        private _fuseSidebarService: FuseSidebarService
+        private _fuseSidebarService: FuseSidebarService,
+        private _router: Router,
     )
     {
+        this._router.navigate(['/products']);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -29,6 +32,7 @@ export class ProductsViewComponent
 
     refresh(params: ProductQuery): void {
         this.queryParams = params;
+        this._router.navigate(['/products'], { queryParams: this.queryParams });
     }
 
     /**

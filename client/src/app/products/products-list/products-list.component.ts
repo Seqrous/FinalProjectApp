@@ -1,15 +1,15 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
 import { Product } from '../models/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { ProductQuery } from '../models/product-query';
 
 @Component({
@@ -22,10 +22,8 @@ import { ProductQuery } from '../models/product-query';
 export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
-    nameFilter: string;
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
-
-    @Input() queryParams: ProductQuery;
+    queryParams: any;
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -45,6 +43,7 @@ export class ProductsListComponent implements OnInit
     constructor(
         private _productService: ProductService,
         private _route: ActivatedRoute,
+        private _router: Router,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -56,7 +55,17 @@ export class ProductsListComponent implements OnInit
      */
     ngOnInit(): void
     {
+        this._route.queryParams.subscribe(res => {
+            this.queryParams = res as ProductQuery;
+        });
+
         this.loadProducts();
+
+        this._router.events.pipe(
+            filter((event: RouterEvent) => event instanceof NavigationEnd)
+          ).subscribe(() => {
+            this.loadProducts();
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -64,11 +73,7 @@ export class ProductsListComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
 
     private loadProducts(): void {
-        this._route.queryParams.subscribe(res => {
-            this.nameFilter = res['name'];
-            this.queryParams.name = this.nameFilter;
-            this.dataSource = new FilesDataSource(this._productService, this.sort, this.queryParams);
-        });
+        this.dataSource = new FilesDataSource(this._productService, this.sort, this.queryParams);
     }
 }
 
