@@ -48,18 +48,13 @@ namespace server.API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<PagingList<ProductDto>>> FindProducts(PaginationModel productParams)
+        public async Task<ActionResult<PagedProductDto>> FindProducts(PaginationModel productParams)
         {
             var paginatedProducts = await _productContext.GetProductsAsync(productParams);
-            
-            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(paginatedProducts.Items);
 
-            var productToReturnQuery = productsToReturn.AsQueryable();
-
-            var toReturn = PagingList<ProductDto>.CreateList(productToReturnQuery,paginatedProducts.CurrentPage,paginatedProducts.PageSize);
-
-            return Ok(toReturn);
-
+            var pagedResults = _mapper.Map<PagedProductDto>(paginatedProducts);
+         
+            return Ok(pagedResults);
         }
     }
 }
