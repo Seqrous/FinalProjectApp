@@ -1,4 +1,5 @@
 ﻿namespace API.Helpers
+
 {
     public class PaginationModel
     {
