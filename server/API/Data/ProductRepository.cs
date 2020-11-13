@@ -35,10 +35,8 @@ namespace server.API.Data
         }
         public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
-            //return await _context.Products.ToListAsync();
             var products = _context.Products.AsQueryable();
             return await PagingList<Product>.CreateList(products, productParams.PageNumber,productParams.PageSize);
-
         }
 
         public async Task<bool> SaveAllAsync()
