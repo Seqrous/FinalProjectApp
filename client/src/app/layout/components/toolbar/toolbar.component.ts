@@ -173,6 +173,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._translateService.use(lang.id);
     }
 
+    /**
+     * Return the currently logged in user
+     */
     getCurrentUser(): void{
         this._authService.currentUser$.subscribe(user => {
             this.loggedIn = !!user;
@@ -181,6 +184,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         });
     }
 
+    /**
+     * Logout
+     */
     logout(): void {
         this._authService.logout();
     }
