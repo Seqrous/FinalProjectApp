@@ -64,13 +64,15 @@ export class ProductsFiltersComponent implements OnInit {
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
 
+  /**
+   * Search
+   */
   search(): void {
     this.onSearch.emit(this.form.value);
   }
 
   /**
    * Add/remove value of a filter when checked/unchecked
-   * 
    */
   onCheckboxChange(e: any): void {
     const filterType = e.source.id as string;
