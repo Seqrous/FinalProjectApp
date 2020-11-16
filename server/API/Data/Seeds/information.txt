@@ -15,7 +15,9 @@ Script:
   {
     StreetAddress: '{{street()}} {{integer(1, 100)}}',
     City: '{{city()}}',
-    Zip: '{{integer(5000, 9600)}}',
+    Zip: function (tags) {
+      return tags.integer(5000, 9600) + '';
+    },
     Country: '{{country()}}',
     UserId: '{{index(1)}}'
   }
