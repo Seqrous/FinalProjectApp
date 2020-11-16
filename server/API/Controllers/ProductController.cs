@@ -47,7 +47,7 @@ namespace server.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedProductDto>> FindProducts(PaginationModel productParams)
+        public async Task<ActionResult<PagedProductDto>> FindProducts([FromQuery]PaginationModel productParams)
         {
             var paginatedProducts = await _productContext.GetProductsAsync(productParams);
 
