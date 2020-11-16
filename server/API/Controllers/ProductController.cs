@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
 using API.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using server.API.DTOs.Products;
 using server.API.Interfaces;
 
@@ -37,6 +34,7 @@ namespace server.API.Controllers
 
             return productToReturn;
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> FindProductByID(int id) 
         {
@@ -45,8 +43,8 @@ namespace server.API.Controllers
             var productsToReturn = _mapper.Map<ProductDto>(product);
             
             return Ok(productsToReturn);
-
         }
+
         [HttpGet]
         public async Task<ActionResult<PagedProductDto>> FindProducts(PaginationModel productParams)
         {

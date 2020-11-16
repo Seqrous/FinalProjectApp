@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
@@ -36,7 +35,8 @@ namespace server.API.Data
         public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
             var products = _context.Products.AsQueryable();
-            return await PagingList<Product>.CreateList(products, productParams.PageNumber,productParams.PageSize);
+
+            return await PagingList<Product>.CreateList(products, productParams.PageNumber, productParams.PageSize);
         }
 
         public async Task<bool> SaveAllAsync()
