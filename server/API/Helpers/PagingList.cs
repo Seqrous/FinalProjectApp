@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using server.API.DTOs.Products;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API.Entities
 {
-   
+
     public class PagingList<T> : List<T>
     {
         public List<T> Items { get; set; }
@@ -25,6 +23,7 @@ namespace API.Entities
             TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
             Items = items;
         }
+
         public static async Task<PagingList<T>> CreateList(IQueryable<T> source, int pageNumber, int pageSize)
         {
             var totalCount = await source.CountAsync();
