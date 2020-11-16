@@ -15,6 +15,7 @@ namespace API.Helpers
             CreateMap<AppUser, UserDto>();
             CreateMap<ProductDto, Product>();
             CreateMap<Product, ProductDto>();
+            CreateMap<PagingList<Product>,PagedProductDto>();
         }
     }
 }

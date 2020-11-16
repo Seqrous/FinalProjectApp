@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
+using API.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using server.API.DTOs.Products;
@@ -34,6 +34,7 @@ namespace server.API.Controllers
 
             return productToReturn;
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> FindProductByID(int id) 
         {
@@ -42,17 +43,16 @@ namespace server.API.Controllers
             var productsToReturn = _mapper.Map<ProductDto>(product);
             
             return Ok(productsToReturn);
-
         }
-        [HttpGet]
-        public async Task<ActionResult<ProductDto>> FindProducts()
-        {
-            var products = await _productContext.GetAllProductsAsync();
-            
-            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(products);
-            
-            return Ok(productsToReturn);
 
+        [HttpGet]
+        public async Task<ActionResult<PagedProductDto>> FindProducts(PaginationModel productParams)
+        {
+            var paginatedProducts = await _productContext.GetProductsAsync(productParams);
+
+            var pagedResults = _mapper.Map<PagedProductDto>(paginatedProducts);
+         
+            return Ok(pagedResults);
         }
     }
 }
