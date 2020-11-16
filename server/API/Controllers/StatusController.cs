@@ -12,7 +12,6 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        [Route("/api/ping")]
         public IActionResult Get()
         {
             return Ok(DateTime.UtcNow + "  Running "); 
