@@ -29,8 +29,6 @@ namespace API
             services.AddApplicationServices(_config);
             services.AddControllers();
             services.AddIdentityServices(_config);
-            services.AddHealthChecks();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +46,6 @@ namespace API
             app.UseAuthentication();
 
             app.UseAuthorization();
-
 
             app.UseHealthChecks("/api/healthcheck");
 
