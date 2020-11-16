@@ -27,6 +27,7 @@ namespace API.Extensions
                options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
             services.AddCors();
+            services.AddHealthChecks();
 
             return services;
         }
