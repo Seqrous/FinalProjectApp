@@ -9,6 +9,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '@fuse/services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector     : 'toolbar',
@@ -34,15 +35,18 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
+     * @param { FuseConfigService } _fuseConfigService
+     * @param { FuseSidebarService } _fuseSidebarService
+     * @param { TranslateService } _translateService
+     * @param { AuthenticationService } _authService
+     * @param { Router } _router
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService,
         public _authService: AuthenticationService,
+        private _router: Router,
     )
     {
         // Set the defaults
@@ -148,8 +152,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
      */
     search(value): void
     {
-        // Do your search here...
-        console.log(value);
+        const params = {
+            'name': value
+        };
+        
+        this._router.navigate(['/products'], { queryParams: params });
     }
 
     /**
@@ -166,6 +173,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._translateService.use(lang.id);
     }
 
+    /**
+     * Return the currently logged in user
+     */
     getCurrentUser(): void{
         this._authService.currentUser$.subscribe(user => {
             this.loggedIn = !!user;
@@ -174,6 +184,9 @@ export class ToolbarComponent implements OnInit, OnDestroy
         });
     }
 
+    /**
+     * Logout
+     */
     logout(): void {
         this._authService.logout();
     }

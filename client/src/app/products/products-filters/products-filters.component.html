@@ -1,0 +1,74 @@
+<div class="demo-sidebar">
+  <div class="example-container">
+
+    <h1 class='filter-title'>Filters <mat-icon>filter_list</mat-icon></h1>
+
+    <!-- Price filter -->
+    <div id="price-filter">
+      <h2 class='title'>Price</h2>
+      <div fxLayout="row" fxLayoutGap="16px">
+
+        <form class='form' name="form" [formGroup]='form'>
+          <mat-form-field appearance="legacy">
+            <mat-label>Min. Price</mat-label>
+            <input matInput formControlName='minPrice'>
+          </mat-form-field>
+        </form>
+
+        <form class='form' name="form" [formGroup]='form'>
+          <mat-form-field appearance="legacy">
+            <mat-label>Max. Price</mat-label>
+            <input matInput formControlName='maxPrice'>
+          </mat-form-field>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- /Price filter -->
+
+    <!-- Condition filter -->
+
+    <div id='condition-filter' *ngIf="conditionsList && conditionsList.length !== 0">
+      <h2 class='title'>Condition</h2>
+        
+      <form class='form' name="form" [formGroup]="form">
+        <section class="section">
+          <div fxLayout="column">
+            <div *ngFor="let condition of conditionsList; let i=index">
+              <mat-checkbox id="conditions-{{ conditionsList[i].value }}" (change)="onCheckboxChange($event)">{{ conditionsList[i].name }}</mat-checkbox>
+            </div>
+          </div>
+          </section>
+      </form>     
+    </div>
+        
+    <!-- /Condition filter -->
+
+    <!-- Manufacturer filter -->
+
+    <div id='manufacturer-filter' *ngIf="manufacturerList && manufacturerList.length !== 0">
+      <h2 class='title'>Manufacturer</h2>
+
+      <form class='form' name='form' [formGroup]="form">
+        <section class="section">
+          <div fxLayout="column">
+            <div *ngFor="let manufacturer of manufacturerList; let i=index">
+              <mat-checkbox id="manufacturers-{{ manufacturerList[i].value }}" (change)="onCheckboxChange($event)">{{ manufacturerList[i].name }}</mat-checkbox>
+            </div>
+          </div>
+        </section>
+      </form>
+    </div>
+
+    <!-- /Manufacturer filter -->
+
+    <br>
+    <div fxLayout="row">
+      <button mat-button fuseWidgetToggle>Clear</button>
+      <button mat-raised-button color="accent" (click)="search()">Search</button>
+    </div>
+
+  </div>
+</div>
+  

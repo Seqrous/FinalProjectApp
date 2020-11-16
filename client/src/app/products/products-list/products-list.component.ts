@@ -3,12 +3,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
 import { Product } from '../models/product';
+import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ProductQuery } from '../models/product-query';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -21,6 +23,7 @@ export class ProductsListComponent implements OnInit
 {
     dataSource: FilesDataSource | null;
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
+    queryParams: any;
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
@@ -31,8 +34,17 @@ export class ProductsListComponent implements OnInit
     @ViewChild('filter', {static: true})
     filter: ElementRef;
 
+    /**
+     * Constructor
+     * 
+     * @param _productService 
+     * @param _route 
+     * @param _router 
+     */
     constructor(
-        private _productService: ProductService
+        private _productService: ProductService,
+        private _route: ActivatedRoute,
+        private _router: Router,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -44,7 +56,25 @@ export class ProductsListComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.dataSource = new FilesDataSource(this._productService, this.sort);
+        this._route.queryParams.subscribe(res => {
+            this.queryParams = res as ProductQuery;
+        });
+
+        this.loadProducts();
+
+        this._router.events.pipe(
+            filter((event: RouterEvent) => event instanceof NavigationEnd)
+          ).subscribe(() => {
+            this.loadProducts();
+        });
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private methods
+    // -----------------------------------------------------------------------------------------------------
+
+    private loadProducts(): void {
+        this.dataSource = new FilesDataSource(this._productService, this.sort, this.queryParams);
     }
 }
 
@@ -54,17 +84,19 @@ export class FilesDataSource extends DataSource<any>
 
     /**
      * Constructor
-     *
-     * @param {ProductService} _productService
-     * @param {MatPaginator} _matPaginator
-     * @param {MatSort} _matSort
+     * 
+     * @param _productService 
+     * @param _matSort 
+     * @param queryParams 
      */
     constructor(
         private _productService: ProductService,
-        private _matSort: MatSort
+        private _matSort: MatSort,
+        private queryParams: ProductQuery,
     )
     {
         super();
+        this.queryParams = queryParams;
     }
 
     /**
@@ -74,7 +106,10 @@ export class FilesDataSource extends DataSource<any>
      */
     connect(): Observable<any[]>
     {
-        return this._productService.getProducts().pipe(map(data => this.products = data));
+        return this._productService.getProducts(Object.assign(
+            {},
+            this.queryParams,
+        )).pipe(map(data => this.products = data));
     }
 
     // -----------------------------------------------------------------------------------------------------
