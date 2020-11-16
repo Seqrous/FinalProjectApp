@@ -1,0 +1,84 @@
+Current number of users: 19
+Script:
+[
+  '{{repeat(19, 19)}}',
+  {
+    Name: '{{firstName()}}',
+    Email: '{{email()}}'
+  }
+]
+
+Current number of addresses: 19
+Script:
+[
+  '{{repeat(19, 19)}}',
+  {
+    StreetAddress: '{{street()}} {{integer(1, 100)}}',
+    City: '{{city()}}',
+    Zip: '{{integer(5000, 9600)}}',
+    Country: '{{country()}}',
+    UserId: '{{index(1)}}'
+  }
+]
+
+Current number of products: 501
+Script:
+[
+  '{{repeat(501, 501)}}',
+  {
+    Name: 'Lorem ipsum',
+    Stock: '{{integer(0, 100)}}',
+    Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean egestas ipsum felis, ut aliquam eros facilisis at.'
+  }
+]
+
+Current number of prices: 501
+Script:
+[
+  '{{repeat(501, 501)}}',
+  {
+    ValidPrice: '{{integer(2, 500)}}',
+    ProductId: '{{index(1)}}'
+  }
+]
+
+
+Current number of orders: 25
+Script:
+[
+  '{{repeat(25, 25)}}',
+  {
+    UserId: '{{integer(1, 19)}}'
+  }
+]
+
+Current number of orderlines: 50
+Script:
+[
+  '{{repeat(50, 50)}}',
+  {
+    Quantity: '{{integer(1, 10)}}',
+    ProductId: '{{integer(1, 501)}}',
+    OrderId: '{{integer(1, 25)}}'
+  }
+]
+
+Current number of categoires: 10
+Script:
+[
+  '{{repeat(10, 10)}}',
+  {
+    Name: 'lorem ipsum'
+  }
+]
+
+Current number of ProductCategories: 501
+Script: 
+[
+  '{{repeat(501, 501)}}',
+  {
+    ProductId: '{{index(1)}}',
+    CategoryId: '{{integer(1, 10)}}'
+  }
+]
+
