@@ -23,19 +23,19 @@ export class Product {
     }
 }
 
-interface PagedProductsCredentials extends ResponsePageCredentials<Product> {
-
+interface ProductsCredentials extends ResponsePageCredentials<Product> {
 }
 
-export class PagedProducts {
+export class ProductsPage {
     size = 0;
     page = 0;
     totalPages = 0;
     totalCount = 0;
 
-    products: Product[];
+    products: Product[] = [];
 
-    constructor(cred: PagedProductsCredentials) {
+    constructor(cred?: ProductsCredentials) {
+        
         if (cred) {
             this.size = cred.pageSize;
             this.page = cred.currentPage;

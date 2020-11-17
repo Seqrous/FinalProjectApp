@@ -109,7 +109,7 @@ export class FilesDataSource extends DataSource<any>
         return this._productService.getProducts(Object.assign(
             {},
             this.queryParams,
-        )).pipe(map(data => this.products = data));
+        )).pipe(map(data => this.products = data.products));
     }
 
     // -----------------------------------------------------------------------------------------------------
