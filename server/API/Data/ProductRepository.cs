@@ -38,6 +38,10 @@ namespace server.API.Data
 
             return await PagingList<Product>.CreateList(products, productParams.PageNumber, productParams.PageSize);
         }
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await _context.Products.ToListAsync();
+        }
 
         public async Task<bool> SaveAllAsync()
         {
