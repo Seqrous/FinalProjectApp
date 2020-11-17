@@ -8,7 +8,7 @@ import { filter, map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
-import { Product } from '../models/product';
+import { ProductsPage } from '../models/product';
 import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { ProductQuery } from '../models/product-query';
 
@@ -80,7 +80,7 @@ export class ProductsListComponent implements OnInit
 
 export class FilesDataSource extends DataSource<any>
 {
-    public products: Product[] = [];
+    productsPage = new ProductsPage();
 
     /**
      * Constructor
@@ -109,7 +109,13 @@ export class FilesDataSource extends DataSource<any>
         return this._productService.getProducts(Object.assign(
             {},
             this.queryParams,
-        )).pipe(map(data => this.products = data.products));
+        )).pipe(map(data => {
+                this.productsPage.totalCount = data.totalCount;
+                this.productsPage.size = data.size;
+                this.productsPage.page = data.page;
+                return this.productsPage.products = data.products;
+            }
+        ));
     }
 
     // -----------------------------------------------------------------------------------------------------
