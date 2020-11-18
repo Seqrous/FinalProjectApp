@@ -5,6 +5,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsViewComponent } from './products-view/products-view.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsFiltersComponent } from './products-filters/products-filters.component';
+import { ProductComponent } from './product/product.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,6 +48,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ProductsViewComponent,
     ProductsListComponent,
     ProductsFiltersComponent,
+    ProductComponent,
   ]
 })
 export class ProductsModule { }
