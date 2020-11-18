@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ProductQuery } from '../models/product-query';
@@ -9,7 +9,7 @@ import { ProductQuery } from '../models/product-query';
     templateUrl: './products-view.component.html',
     styleUrls  : ['./products-view.component.scss']
 })
-export class ProductsViewComponent 
+export class ProductsViewComponent implements OnInit
 {
     queryParams = new ProductQuery();
 
@@ -17,14 +17,23 @@ export class ProductsViewComponent
      * Constructor
      * 
      * @param _fuseSidebarService 
-     * @param _router 
+     * @param _route 
+     * @param _router
      */
     constructor(
         private _fuseSidebarService: FuseSidebarService,
+        private _route: ActivatedRoute,
         private _router: Router,
-    )
-    {
-        this._router.navigate(['/products']);
+    ) {}
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Lifecycle hooks
+    // -----------------------------------------------------------------------------------------------------
+
+    ngOnInit(): void {
+        this._route.queryParams.subscribe(res => {
+            this.queryParams = res as ProductQuery;
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -37,6 +46,7 @@ export class ProductsViewComponent
      * @param params 
      */
     refresh(params: ProductQuery): void {
+        params.name = this.queryParams.name;
         this.queryParams = params;
         this._router.navigate(['/products'], { queryParams: this.queryParams });
     }

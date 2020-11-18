@@ -1,16 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
-import { Product } from '../models/product';
-import { ActivatedRoute, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { Product, ProductsPage } from '../models/product';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ProductQuery } from '../models/product-query';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -19,27 +16,22 @@ import { ProductQuery } from '../models/product-query';
     animations   : fuseAnimations,
     encapsulation: ViewEncapsulation.None
 })
-export class ProductsListComponent implements OnInit
+export class ProductsListComponent implements OnInit, AfterViewInit
 {
-    dataSource: FilesDataSource | null;
+    dataSource = new MatTableDataSource<Product>();
     displayedColumns = ['id', 'image', 'name', 'price', 'quantity'];
-    queryParams: any;
+    
+    productsPage: ProductsPage = new ProductsPage();
+    searchParams: ProductQuery = new ProductQuery();
 
     @ViewChild(MatPaginator, {static: true})
     paginator: MatPaginator;
-
-    @ViewChild(MatSort, {static: true})
-    sort: MatSort;
-
-    @ViewChild('filter', {static: true})
-    filter: ElementRef;
 
     /**
      * Constructor
      * 
      * @param _productService 
      * @param _route 
-     * @param _router 
      */
     constructor(
         private _productService: ProductService,
@@ -57,16 +49,29 @@ export class ProductsListComponent implements OnInit
     ngOnInit(): void
     {
         this._route.queryParams.subscribe(res => {
-            this.queryParams = res as ProductQuery;
+            this.searchParams = res as ProductQuery;
         });
 
+        this._router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.refresh();
+            }
+        });
+    }
+
+    /**
+     * After view init
+     */
+    ngAfterViewInit(): void {
         this.loadProducts();
+    }
 
-        this._router.events.pipe(
-            filter((event: RouterEvent) => event instanceof NavigationEnd)
-          ).subscribe(() => {
-            this.loadProducts();
-        });
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    refresh(): void {
+        this.loadProducts();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -74,92 +79,20 @@ export class ProductsListComponent implements OnInit
     // -----------------------------------------------------------------------------------------------------
 
     private loadProducts(): void {
-        this.dataSource = new FilesDataSource(this._productService, this.sort, this.queryParams);
-    }
-}
-
-export class FilesDataSource extends DataSource<any>
-{
-    public products: Product[] = [];
-
-    /**
-     * Constructor
-     * 
-     * @param _productService 
-     * @param _matSort 
-     * @param queryParams 
-     */
-    constructor(
-        private _productService: ProductService,
-        private _matSort: MatSort,
-        private queryParams: ProductQuery,
-    )
-    {
-        super();
-        this.queryParams = queryParams;
-    }
-
-    /**
-     * Connect function called by the table to retrieve one stream containing the data to render.
-     *
-     * @returns {Observable<any[]>}
-     */
-    connect(): Observable<any[]>
-    {
-        return this._productService.getProducts(Object.assign(
+        this._productService.getProducts(Object.assign(
             {},
-            this.queryParams,
-        )).pipe(map(data => this.products = data));
-    }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Sort data
-     *
-     * @param data
-     * @returns {any[]}
-     */
-    sortData(data): any[]
-    {
-        if ( !this._matSort.active || this._matSort.direction === '' )
-        {
-            return data;
-        }
-
-        return data.sort((a, b) => {
-            let propertyA: number | string = '';
-            let propertyB: number | string = '';
-
-            switch ( this._matSort.active )
-            {
-                case 'id':
-                    [propertyA, propertyB] = [a.id, b.id];
-                    break;
-                case 'name':
-                    [propertyA, propertyB] = [a.name, b.name];
-                    break;
-                case 'price':
-                    [propertyA, propertyB] = [a.priceTaxIncl, b.priceTaxIncl];
-                    break;
-                case 'quantity':
-                    [propertyA, propertyB] = [a.quantity, b.quantity];
-                    break;
-            }
-
-            const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-            const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-            return (valueA < valueB ? -1 : 1) * (this._matSort.direction === 'asc' ? 1 : -1);
+            this.searchParams,
+            this.paginationParams(),
+        )).subscribe(res => {
+            this.productsPage = res;
+            this.dataSource.data = this.productsPage.products;
         });
     }
 
-    /**
-     * Disconnect
-     */
-    disconnect(): void
-    {
+    private paginationParams(): any {
+        return {
+            pageSize: this.paginator.pageSize,
+            pageNumber: this.paginator.pageIndex ? this.paginator.pageIndex : 1,
+        };
     }
 }
