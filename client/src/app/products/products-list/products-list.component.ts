@@ -5,7 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
 import { Product, ProductsPage } from '../models/product';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ProductQuery } from '../models/product-query';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -36,6 +36,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit
     constructor(
         private _productService: ProductService,
         private _route: ActivatedRoute,
+        private _router: Router,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -47,14 +48,27 @@ export class ProductsListComponent implements OnInit, AfterViewInit
      */
     ngOnInit(): void
     {
-        this._route.params.subscribe(res => {
+        this._route.queryParams.subscribe(res => {
             this.searchParams = res as ProductQuery;
+        });
+
+        this._router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.refresh();
+            }
         });
     }
 
+    /**
+     * After view init
+     */
     ngAfterViewInit(): void {
         this.loadProducts();
     }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
 
     refresh(): void {
         this.loadProducts();

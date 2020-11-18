@@ -153,7 +153,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     search(value): void
     {
         const params = {
-            'name': value
+            name: value
         };
         
         this._router.navigate(['/products'], { queryParams: params });
