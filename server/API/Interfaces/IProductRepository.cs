@@ -25,7 +25,6 @@ namespace server.API.Interfaces
             Get product by its ID
         */
         Task<Product> GetProductByIdAsync(int id);
-<<<<<<< HEAD
 
         /*
             Get product by its Name
@@ -35,11 +34,6 @@ namespace server.API.Interfaces
         /*
             Get all available products
         */
-=======
-        // get product by its Name
-        Task<Product> GetProductByNameAsync(string name);
-        // get all available products
->>>>>>> fixed comments for products
         Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
     }
 }
