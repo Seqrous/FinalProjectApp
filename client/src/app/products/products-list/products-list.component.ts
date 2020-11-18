@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { fuseAnimations } from '@fuse/animations';
 
 import { ProductService } from 'app/products/product.service';
 import { Product, ProductsPage } from '../models/product';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProductQuery } from '../models/product-query';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector     : 'fuse-products-list',
@@ -23,6 +23,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit
     
     productsPage: ProductsPage = new ProductsPage();
     searchParams: ProductQuery = new ProductQuery();
+
+    @ViewChild(MatPaginator, {static: true})
+    paginator: MatPaginator;
 
     /**
      * Constructor
@@ -53,6 +56,10 @@ export class ProductsListComponent implements OnInit, AfterViewInit
         this.loadProducts();
     }
 
+    refresh(): void {
+        this.loadProducts();
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -61,9 +68,17 @@ export class ProductsListComponent implements OnInit, AfterViewInit
         this._productService.getProducts(Object.assign(
             {},
             this.searchParams,
+            this.paginationParams(),
         )).subscribe(res => {
             this.productsPage = res;
             this.dataSource.data = this.productsPage.products;
         });
+    }
+
+    private paginationParams(): any {
+        return {
+            pageSize: this.paginator.pageSize,
+            pageNumber: this.paginator.pageIndex ? this.paginator.pageIndex : 1,
+        };
     }
 }

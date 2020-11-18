@@ -78,7 +78,8 @@
                          [length]="productsPage.totalCount"
                          [pageIndex]="productsPage.page"
                          [pageSize]="productsPage.size"
-                         [pageSizeOptions]="[10, 25, 100]">
+                         [pageSizeOptions]="[10, 25, 100]"
+                         (page)="refresh()">
           </mat-paginator>
 
       </div>
