@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Helpers;
@@ -35,17 +36,8 @@ namespace server.API.Interfaces
             Get all available products
         */
         Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
-<<<<<<< HEAD
-=======
-=======
-        Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
-<<<<<<< HEAD
 
 
->>>>>>> I'LL COMMIT the pagination so I can revert back:server/API/Interfaces/IProductInterface.cs
-=======
         Task<IEnumerable<Product>> GetAllProductsAsync();
->>>>>>> fp-36 rebase onto Development
->>>>>>> 7d0f819... fp-36 rebase onto Development
     }
 }
