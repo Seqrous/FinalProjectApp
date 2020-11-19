@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+  /**
+   * Constructor
+   * 
+   * @param _location 
+   */
+  constructor(
+    private _location: Location,
+  ) { }
 
-  ngOnInit() {
+  /**
+   * On init
+   */
+  ngOnInit(): void {
+  }
+
+  back(): void {
+    this._location.back();
   }
 
 }
