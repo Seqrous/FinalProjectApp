@@ -38,7 +38,7 @@ export class ProductsPage {
         
         if (cred) {
             this.size = cred.pageSize;
-            this.page = cred.currentPage;
+            this.page = cred.currentPage - 1;
             this.totalPages = cred.totalPages;
             this.totalCount = cred.totalCount;
 

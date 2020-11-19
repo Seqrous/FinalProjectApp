@@ -8,6 +8,8 @@ import { Location } from '@angular/common';
 })
 export class ProductComponent implements OnInit {
 
+  product: any = {};
+
   /**
    * Constructor
    * 
