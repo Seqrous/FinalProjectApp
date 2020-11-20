@@ -1,5 +1,7 @@
 #product {
 
+    height: 100%;
+
     .header {
 
         .product-image {
@@ -26,11 +28,43 @@
 
     .content {
 
+        .image-display-wrapper {
+
+            flex: 2 1 auto;
+
+            .image-display {
+                overflow: hidden;
+                width: 500px;
+                height: 500px;
+                border: 2px solid rgb(238, 238, 238);
+
+                img {
+                    height: 100%;
+                    width: auto;
+                    max-width: none;
+                }
+            }
+        }
+
+        .product-information-wrapper {
+            flex: 9 1 auto;
+        }
+
         .mat-tab-group,
         .mat-tab-body-wrapper,
         .tab-content{
-            flex: 1 1 auto;
-            max-width: 100%;
+            display: flex;
+        }
+
+        .product-purchase-wrapper {
+            flex: 2 1 auto;
+
+            .product-purchase {
+                height: 500px;
+                width: 250px;
+                border: 2px solid rgb(238, 238, 238);
+                border-radius: 5px;
+            }
         }
 
         .mat-tab-body-content {
