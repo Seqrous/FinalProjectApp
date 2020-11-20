@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -38,6 +39,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSelectModule,
     MatCheckboxModule,
     MatChipsModule,
+
+    TranslateModule,
 
     FuseSidebarModule,
     FuseSharedModule,

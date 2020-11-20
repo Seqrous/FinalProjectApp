@@ -9,7 +9,7 @@
             </button>
         </label>
 
-        <input id="fuse-search-bar-input" class="ml-24" type="text" placeholder="Search" (input)="updateSearch($event)" (keyup.enter)="search()"
+        <input id="fuse-search-bar-input" class="ml-24" type="text" placeholder="{{ 'Searchbar.Search' | translate }}" (input)="updateSearch($event)" (keyup.enter)="search()"
                fxFlex>
 
         <button mat-icon-button class="fuse-search-bar-collapser" (click)="collapse()"

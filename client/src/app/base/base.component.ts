@@ -3,8 +3,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 
-import { locale as english } from './i18n/en';
-import { locale as turkish } from './i18n/tr';
+import { locale as english } from 'app/i18n/en';
+import { locale as danish } from 'app/i18n/dk';
 
 @Component({
     selector   : 'base',
@@ -46,6 +46,6 @@ export class BaseComponent
             }
         };
         
-        this._fuseTranslationLoaderService.loadTranslations(english, turkish);
+        this._fuseTranslationLoaderService.loadTranslations(english, danish);
     }
 }

@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { FuseSearchBarComponent } from './search-bar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,8 @@ import { FuseSearchBarComponent } from './search-bar.component';
     imports     : [
         CommonModule,
         RouterModule,
+
+        TranslateModule,
 
         MatButtonModule,
         MatIconModule
