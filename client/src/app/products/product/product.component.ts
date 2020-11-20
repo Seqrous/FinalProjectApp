@@ -11,8 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
 
-  product: any = {};
+  product: ProductDetails;
   productId: number;
+  selected = '1';
 
   /**
    * Constructor
@@ -61,7 +62,7 @@ export class ProductComponent implements OnInit {
    */
   private loadProduct(id: number): void {
     this._productService.getProduct(id).subscribe(res => {
-      this.product = res;
+      this.product = res;;
     });
   }
 }
