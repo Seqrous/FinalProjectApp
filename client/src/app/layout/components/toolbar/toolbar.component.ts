@@ -10,6 +10,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '@fuse/services/authentication.service';
 import { Router } from '@angular/router';
+import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 
 @Component({
     selector     : 'toolbar',
@@ -40,6 +41,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
      * @param { TranslateService } _translateService
      * @param { AuthenticationService } _authService
      * @param { Router } _router
+     * @param { ShoppingCartService } _shoppingCart
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
@@ -47,6 +49,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         public _authService: AuthenticationService,
         private _router: Router,
+        public _shoppingCart: ShoppingCartService,
     )
     {
         // Set the defaults

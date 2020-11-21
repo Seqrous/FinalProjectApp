@@ -66,7 +66,10 @@
 
             <button mat-button fxHide fxShow.gt-xs
                     class="shopping-cart-button">
-                    <mat-icon>shopping_cart</mat-icon>
+                <div fxLayout="row">
+                    <div class="cart-items accent" *ngIf="(_shoppingCart.cartProducts$ | async) as products">{{ products.length }}</div>
+                    <mat-icon class="ml-4">shopping_cart</mat-icon>
+                </div>
             </button>
 
             <div class="toolbar-separator"></div>
