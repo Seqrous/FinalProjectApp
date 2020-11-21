@@ -65,9 +65,9 @@
             <div class="toolbar-separator"></div>
 
             <button mat-button fxHide fxShow.gt-xs
-                    class="shopping-cart-button">
+                    class="shopping-cart-button" (click)="productsNumber > 0 ? toggleSidebarOpen('quickPanel') : true">
                 <div fxLayout="row">
-                    <div class="cart-items accent" *ngIf="(_shoppingCart.cartProducts$ | async) as products">{{ products.length }}</div>
+                    <div class="cart-items accent" *ngIf="productsNumber > 0">{{ productsNumber }}</div>
                     <mat-icon class="ml-4">shopping_cart</mat-icon>
                 </div>
             </button>

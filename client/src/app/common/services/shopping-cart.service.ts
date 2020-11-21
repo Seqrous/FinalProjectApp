@@ -7,12 +7,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ShoppingCartService {
 
-  private productsSource = new BehaviorSubject<Product[]>(null);
+  private productsSource = new BehaviorSubject<Product[]>([]);
   cartProducts$ = this.productsSource.asObservable();
 
   products: Product[] = [];
 
-constructor() { }
+  constructor() { }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods

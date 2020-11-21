@@ -11,6 +11,7 @@ import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '@fuse/services/authentication.service';
 import { Router } from '@angular/router';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
+import { Product } from 'app/products/models/product';
 
 @Component({
     selector     : 'toolbar',
@@ -29,6 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
     loggedIn: boolean;
+    productsNumber: number;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -49,7 +51,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         public _authService: AuthenticationService,
         private _router: Router,
-        public _shoppingCart: ShoppingCartService,
+        private _shoppingCart: ShoppingCartService,
     )
     {
         // Set the defaults
@@ -122,6 +124,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
         
         this.getCurrentUser();
+        this.getProducts();
     }
 
     /**
@@ -179,9 +182,20 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * Return the currently logged in user
      */
-    getCurrentUser(): void{
+    getCurrentUser(): void {
         this._authService.currentUser$.subscribe(user => {
             this.loggedIn = !!user;
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    /**
+     * Return the number of the products in the shopping cart
+     */
+    getProducts(): void {
+        this._shoppingCart.cartProducts$.subscribe(products => {
+            this.productsNumber = products.length;
         }, error => {
             console.log(error);
         });
