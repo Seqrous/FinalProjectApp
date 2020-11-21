@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ProductDetails } from '../models/product-details';
 import { ProductService } from '../product.service';
+import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { Product } from '../models/product';
 
 @Component({
   selector: 'app-product',
@@ -24,6 +26,7 @@ export class ProductComponent implements OnInit {
     private _productService: ProductService,
     private _route: ActivatedRoute,
     private _location: Location,
+    private _shoppingCart: ShoppingCartService,
   ) { }
 
   
@@ -47,8 +50,17 @@ export class ProductComponent implements OnInit {
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
 
-  back(): void {
+  public back(): void {
     this._location.back();
+  }
+
+  /**
+   * Add the product to the shopping cart
+   */
+  public addToCart(): void {
+    let product = Object.assign({}, this.product) as any;
+    product = new Product(product);
+    this._shoppingCart.addProduct(product);
   }
 
   
@@ -62,7 +74,7 @@ export class ProductComponent implements OnInit {
    */
   private loadProduct(id: number): void {
     this._productService.getProduct(id).subscribe(res => {
-      this.product = res;;
+      this.product = res;
     });
   }
 }
