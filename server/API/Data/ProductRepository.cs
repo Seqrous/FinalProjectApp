@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using API.Helpers;
 using Microsoft.EntityFrameworkCore;
 using server.API.Interfaces;
+using System.Linq.Dynamic.Core;
 
 namespace server.API.Data
 {
@@ -18,6 +22,9 @@ namespace server.API.Data
 
         public async Task<Product> InsertProduct(Product product)
         {
+            product.Name = product.Name;
+            product.Prices = product.Prices;
+            product.Stock = product.Stock;
             _context.Products.Add(product);
 
             await SaveAllAsync();
@@ -35,13 +42,17 @@ namespace server.API.Data
         }
         public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
-            var products = _context.Products.AsQueryable();
+            var products = _context.Products.Include(p => p.Prices).AsQueryable();
+
+            products = products.Where(p => p.Prices.FirstOrDefault().ValidPrice <= productParams.MaxPrice || p.Prices.FirstOrDefault().ValidPrice >= productParams.MinPrice);
 
             return await PagingList<Product>.CreateList(products, productParams.PageNumber, productParams.PageSize);
         }
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            var productWithPrices = _context.Prices.Include(p => p.ValidPrice).AsQueryable();
+            productWithPrices = (IQueryable<Price>)_context.Products.Include(p => p.Prices).ToListAsync();
+            return (IEnumerable<Product>)productWithPrices;
         }
 
         public async Task<bool> SaveAllAsync()
@@ -53,5 +64,7 @@ namespace server.API.Data
         {
             _context.Entry(product).State = EntityState.Modified;
         }
+       
     }
+   
 }

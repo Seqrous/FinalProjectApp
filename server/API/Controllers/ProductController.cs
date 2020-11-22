@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
@@ -65,8 +67,8 @@ namespace server.API.Controllers
             // ApplySort method needs IQueryable data source hence we need to convert it
             
             var product = await _productContext.GetAllProductsAsync();
-            var usersToReturn = _mapper.Map<IEnumerable<ProductDto>>(product);
-            var productQueryable = usersToReturn.AsQueryable();
+            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(product);
+            var productQueryable = productsToReturn.AsQueryable();
 
             // Apply sorting
             productQueryable = productQueryable.ApplySort(sort);
@@ -74,6 +76,6 @@ namespace server.API.Controllers
             // Return response
             return Ok(productQueryable);
             
-        }
+        }     
     }
 }
