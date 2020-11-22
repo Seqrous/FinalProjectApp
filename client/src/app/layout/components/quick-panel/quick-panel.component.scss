@@ -2,12 +2,34 @@ quick-panel {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    width: 280px;
-    min-width: 280px;
-    max-width: 280px;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
     z-index: 99;
 
     .mat-slide-toggle-content {
         flex: 1;
+    }
+
+    .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+
+        .products-list {
+            flex: 1 1 auto;
+    
+            .product-content {
+    
+                img {
+                    height: 150px;
+                    width: 150px;
+                }
+            }
+        }
+    
+        .checkout-button {
+            width: 100%;
+        }
     }
 }
