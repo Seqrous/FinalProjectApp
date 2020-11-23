@@ -15,7 +15,7 @@ export class QuickPanelComponent implements OnInit
     notes: any[];
     settings: any;
     products: Product[];
-    selected: '1';
+    selected = '1';
 
     /**
      * Constructor
