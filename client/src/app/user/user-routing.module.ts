@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserCheckoutComponent } from './user-checkout/user-checkout.component';
 import { UserComponent } from './user.component';
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
                 path: '',
                 component: UserComponent,
             },
+            {
+                path: 'checkout',
+                component: UserCheckoutComponent,
+            }
         ]
     }
 ];
