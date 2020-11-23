@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ProductDetails } from '../models/product-details';
 import { ProductService } from '../product.service';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../models/product';
 
 @Component({
@@ -20,13 +20,18 @@ export class ProductComponent implements OnInit {
   /**
    * Constructor
    * 
+   * @param _productService 
+   * @param _route 
    * @param _location 
+   * @param _shoppingCart 
+   * @param _router 
    */
   constructor(
     private _productService: ProductService,
     private _route: ActivatedRoute,
     private _location: Location,
     private _shoppingCart: ShoppingCartService,
+    private _router: Router,
   ) { }
 
   
@@ -52,6 +57,10 @@ export class ProductComponent implements OnInit {
 
   public back(): void {
     this._location.back();
+  }
+
+  public redirect(route: string): void {
+    this._router.navigate([`${route}`]);
   }
 
   /**

@@ -90,7 +90,7 @@
 
                                         <div class="purchase-buttons" fxLayout="column">
                                             <button mat-raised-button color="accent" (click)="addToCart()"><mat-icon>shopping_cart</mat-icon> Add to Cart</button>
-                                            <button mat-raised-button color="primary"><mat-icon>play_circle_outline</mat-icon> Buy Now</button>
+                                            <button mat-raised-button color="primary" (click)="addToCart(); redirect('user/checkout')"><mat-icon>play_circle_outline</mat-icon> Buy Now</button>
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { Product } from 'app/products/models/product';
@@ -22,10 +23,13 @@ export class QuickPanelComponent implements OnInit
      * Constructor
      * 
      * @param _shoppingCart 
+     * @param _fuseSidebarService 
+     * @param _router 
      */
     constructor(
         private _shoppingCart: ShoppingCartService,
         private _fuseSidebarService: FuseSidebarService,
+        private _router: Router,
     )
     {
         // Set the defaults
@@ -60,6 +64,16 @@ export class QuickPanelComponent implements OnInit
     toggleSidebarClose(key): void
     {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
+
+    /**
+     * Redirect to the given path
+     * 
+     * @param route 
+     */
+    public redirect(route: string): void {
+        this._router.navigate([`${route}`]);
+        this.toggleSidebarClose('quickPanel');
     }
 
     /**
