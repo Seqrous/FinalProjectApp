@@ -2,9 +2,6 @@ quick-panel {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    width: 450px;
-    min-width: 450px;
-    max-width: 450px;
     z-index: 99;
 
     .mat-slide-toggle-content {
@@ -18,12 +15,28 @@ quick-panel {
 
         .products-list {
             flex: 1 1 auto;
+
+            .mat-headline {
+                text-align: center;
+            }
     
             .product-content {
-    
+
                 img {
                     height: 150px;
                     width: 150px;
+                }
+                
+                .product-information {
+                    display: flex;
+
+                    .product-price {
+                        flex: 1 1 auto;
+                    }
+                }
+
+                mat-list-item {
+                    height: 180px;
                 }
             }
         }
