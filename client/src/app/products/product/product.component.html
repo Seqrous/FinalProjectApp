@@ -1,0 +1,135 @@
+<div id="product" class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+      <!-- HEADER -->
+      <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+          <!-- APP TITLE -->
+          <div fxLayout="row" fxLayoutAlign="start center">
+
+              <button mat-icon-button class="mr-0 mr-sm-16" (click)="back()">
+                  <mat-icon>arrow_back</mat-icon>
+              </button>
+
+              <div class="product-image mr-8 mr-sm-16">
+                  <img *ngIf="product" src="../../assets/images/ecommerce/yosemite.jpg">
+              </div>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                  <div class="h2">
+                      {{ product.name }}
+                  </div>
+                  <div class="subtitle secondary-text">
+                      <span>Product Detail</span>
+                  </div>
+              </div>
+          </div>
+          <!-- / APP TITLE -->
+
+      </div>
+      <!-- / HEADER -->
+
+      <!-- CONTENT CARD -->
+      <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+                <form name="productForm" class="product w-100-p" fxLayout="column" fxFlex>
+                    <mat-tab-group>
+
+                        <mat-tab label="Basic Info">
+                                
+                            <div class="tab-content p-24" fxLayout="row" fusePerfectScrollbar fxFlex>
+
+                                <div class="image-display-wrapper ml-60 mt-20 mr-20">
+                                    <div class="image-display">
+                                        <img class="media" src="../../assets/images/ecommerce/yosemite.jpg">
+                                    </div>
+                                </div>
+
+                                <div class="product-information-wrapper">
+                                    <div class="product-information mt-40 mr-120">
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Product Name</mat-label>
+                                            <input matInput value="{{ product.name }}"
+                                                    name="name"
+                                                    readonly>
+                                        </mat-form-field>
+        
+                                        <mat-form-field appearance="outline" floatLabel="always" class="w-100-p">
+                                            <mat-label>Product Description</mat-label>
+                                            <textarea matInput value="{{ product.description }}"
+                                                        name="description"
+                                                        rows="5"
+                                                        readonly>
+                                            </textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="product-purchase-wrapper mt-20">
+                                    <div class="product-purchase p-16">
+                                        <h2 class="mt-0 mb-0">$ {{ product.price.toFixed(2) }}</h2>
+                                        <h4 class="mt-0">+ $5.00 Shipping fee</h4>
+                                        <p class="mt-8">Delivery: <strong>29.02.2021</strong></p>
+                                        <h2 class="availability mb-8 mt-24">In Stock</h2>
+                                        
+                                        <mat-form-field class="mt-24" appearance="legacy">
+                                            <mat-label>Quantity</mat-label>
+                                            <mat-select [(value)]="selected">
+                                                <mat-option value="1">1</mat-option>
+                                                <mat-option value="2">2</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <div class="purchase-buttons" fxLayout="column">
+                                            <button mat-raised-button color="accent"><mat-icon>shopping_cart</mat-icon> Add to Cart</button>
+                                            <button mat-raised-button color="primary"><mat-icon>play_circle_outline</mat-icon> Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </mat-tab>
+
+                        <mat-tab label="Product Images">
+
+                            <div class="tab-content p-24" fusePerfectScrollbar>
+                                <div fxLayout="row wrap" fxLayoutAlign="start start">
+
+                                    <div
+                                         class="product-image" fxlayout="row" fxLayoutAlign="center center">
+                                        <img class="media"
+                                             [src]="'assets/images/ecommerce/product-image-placeholder.png'">
+                                    </div>
+
+                                    <!-- <div *ngFor="let image of product.images">
+                                        <div *ngIf="product.images.length > 0"
+                                             class="product-image" fxlayout="row" fxLayoutAlign="center center">
+                                            <img class="media" [src]="image.url">
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </form>
+            </div>
+            <!-- / CONTENT -->
+
+      </div>
+      <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

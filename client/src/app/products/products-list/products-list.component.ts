@@ -32,6 +32,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit
      * 
      * @param _productService 
      * @param _route 
+     * @param _router
      */
     constructor(
         private _productService: ProductService,
@@ -92,7 +93,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit
     private paginationParams(): any {
         return {
             pageSize: this.paginator.pageSize,
-            pageNumber: this.paginator.pageIndex ? this.paginator.pageIndex : 1,
+            pageNumber: this.paginator.pageIndex ? this.paginator.pageIndex + 1 : 1,
         };
     }
 }
