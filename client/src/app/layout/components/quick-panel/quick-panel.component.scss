@@ -22,16 +22,30 @@ quick-panel {
     
             .product-content {
 
-                img {
-                    height: 150px;
-                    width: 150px;
-                }
-                
-                .product-information {
+                .product-info-wrapper {
                     display: flex;
+                    flex-direction: row;
 
-                    .product-price {
+                    .image-wrapper {
+                        flex: 1;
+
+                        img {
+                            min-width: 150px;
+                            min-height: 150px;
+                        }
+                    }
+                    
+                    .product-information {
                         flex: 1 1 auto;
+                        display: flex;
+
+                        .product-price {
+                            flex: 1 1 auto;
+                        }
+                    }
+
+                    .remove-product-button {
+                        bottom: -120px;
                     }
                 }
 

@@ -12,19 +12,26 @@
 
                     <!-- ITEM -->
                     <mat-list-item *ngFor="let product of products" class="mb-0">
-                        <img src="assets/images/ecommerce/yosemite.jpg">
-                        <div class="product-information ml-8" fxLayout="column">
-                            <div class="mat-title product-name mt-12">{{ product.name }}</div>
-                            <div class="mat-body-2 product-price">$ 10.00</div>
-                            <div class="product-quantity">
-                                <mat-form-field class="mt-24 w-100" appearance="legacy">
-                                    <mat-label>Quantity</mat-label>
-                                    <mat-select [(value)]="selected">
-                                        <mat-option value="1">1</mat-option>
-                                        <mat-option value="2">2</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                        <div class="product-info-wrapper">
+                            <div class="image-wrapper pt-12">
+                                <img src="assets/images/ecommerce/yosemite.jpg">
                             </div>
+                            <div class="product-information ml-8" fxLayout="column">
+                                <div class="mat-title product-name mt-12">{{ product.name }}</div>
+                                <div class="mat-body-2 product-price">$ 10.00</div>
+                                <div class="product-quantity">
+                                    <mat-form-field class="mt-24 w-100" appearance="legacy">
+                                        <mat-label>Quantity</mat-label>
+                                        <mat-select [(value)]="selected">
+                                            <mat-option value="1">1</mat-option>
+                                            <mat-option value="2">2</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-icon-button class="remove-product-button">
+                                <mat-icon>remove_shopping_cart</mat-icon>
+                            </button>
                         </div>
                         <mat-divider></mat-divider>
                     </mat-list-item>
