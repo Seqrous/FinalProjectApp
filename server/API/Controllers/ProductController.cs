@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
@@ -57,25 +53,6 @@ namespace server.API.Controllers
             var pagedResults = _mapper.Map<PagedProductDto>(paginatedProducts);
          
             return Ok(pagedResults);
-        }
-        public async Task<ActionResult<ProductDto>> SortByID(string sort = "id")
-        {
-            // Get all the products from the database and Map them 
-
-            // Convert data source into IQueryable
-       
-            // ApplySort method needs IQueryable data source hence we need to convert it
-            
-            var product = await _productContext.GetAllProductsAsync();
-            var productsToReturn = _mapper.Map<IEnumerable<ProductDto>>(product);
-            var productQueryable = productsToReturn.AsQueryable();
-
-            // Apply sorting
-            productQueryable = productQueryable.ApplySort(sort);
-
-            // Return response
-            return Ok(productQueryable);
-            
-        }     
+        }   
     }
 }

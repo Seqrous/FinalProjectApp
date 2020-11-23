@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using API.Helpers;
 using Microsoft.EntityFrameworkCore;
 using server.API.Interfaces;
-using System.Linq.Dynamic.Core;
 
 namespace server.API.Data
 {
@@ -31,6 +28,7 @@ namespace server.API.Data
             
             return product;
         }
+
         public async Task<Product> GetProductByIdAsync(int id) 
         {
             return await _context.Products.FindAsync(id);
@@ -40,19 +38,18 @@ namespace server.API.Data
         {
             return await _context.Products.FindAsync(name);
         }
+
         public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
-            var products = _context.Products.Include(p => p.Prices).AsQueryable();
-
-            products = products.Where(p => p.Prices.FirstOrDefault().ValidPrice <= productParams.MaxPrice || p.Prices.FirstOrDefault().ValidPrice >= productParams.MinPrice);
+            // Return all Products records and fetch price
+            var products = _context.Products.Include(p => p.Prices)
+                .Where(p => p.Prices.Any(price => DateTime.Compare(DateTime.Now, price.EndDate) < 0 && DateTime.Compare(DateTime.Now, price.StartDate) >= 0));
+            
+            foreach (Product product in products) {
+                product.Price = product.Prices.ElementAt(0);
+            }
 
             return await PagingList<Product>.CreateList(products, productParams.PageNumber, productParams.PageSize);
-        }
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
-        {
-            var productWithPrices = _context.Prices.Include(p => p.ValidPrice).AsQueryable();
-            productWithPrices = (IQueryable<Price>)_context.Products.Include(p => p.Prices).ToListAsync();
-            return (IEnumerable<Product>)productWithPrices;
         }
 
         public async Task<bool> SaveAllAsync()

@@ -14,7 +14,8 @@ namespace API.Helpers
         {
             CreateMap<AppUser, UserDto>();
             CreateMap<ProductDto, Product>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price.ValidPrice));
             CreateMap<PagingList<Product>,PagedProductDto>();
         }
     }

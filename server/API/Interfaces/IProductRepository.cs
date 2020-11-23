@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Helpers;
@@ -36,8 +35,5 @@ namespace server.API.Interfaces
             Get all available products
         */
         Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams);
-
-
-        Task<IEnumerable<Product>> GetAllProductsAsync();
     }
 }

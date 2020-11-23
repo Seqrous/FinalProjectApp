@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities
 {
@@ -12,6 +13,9 @@ namespace API.Entities
         public string ImageGalleryUrl { get; set; }
         public DateTime CreatedOn { get; set; }
         public IEnumerable<Price> Prices { get; set; }
+        
+        [NotMapped]
+        public Price Price { get; set; }
         public IEnumerable<ProductCategory> ProductCategories { get; set; }
     }
 }
