@@ -29,7 +29,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <button mat-icon-button class="remove-product-button">
+                            <button (click)="removeProduct(product.id)" mat-icon-button class="remove-product-button">
                                 <mat-icon>remove_shopping_cart</mat-icon>
                             </button>
                         </div>
@@ -46,6 +46,6 @@
 
         </div>
         <button class="checkout-button mb-8" mat-raised-button color="accent">Go To Checkout</button>
-        <button class="checkout-button mb-8" mat-button>Continue Shopping</button>
+        <button class="checkout-button mb-8" mat-button (click)="toggleSidebarClose('quickPanel')">Continue Shopping</button>
     </div>
 </div>

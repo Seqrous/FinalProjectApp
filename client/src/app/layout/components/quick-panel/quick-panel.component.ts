@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { Product } from 'app/products/models/product';
 
@@ -24,6 +25,7 @@ export class QuickPanelComponent implements OnInit
      */
     constructor(
         private _shoppingCart: ShoppingCartService,
+        private _fuseSidebarService: FuseSidebarService,
     )
     {
         // Set the defaults
@@ -47,13 +49,36 @@ export class QuickPanelComponent implements OnInit
     }
 
     // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Toggle sidebar close
+     *
+     * @param key
+     */
+    toggleSidebarClose(key): void
+    {
+        this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
+
+    /**
+     * Remove a product from the shopping cart
+     * 
+     * @param productId 
+     */
+    removeProduct(productId: number): void {
+        this._shoppingCart.removeProduct(productId);
+    }
+
+    // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
 
     /**
      * Return a list of all products in the shopping cart
      */
-    private  getProducts(): void {
+    private getProducts(): void {
         this._shoppingCart.cartProducts$.subscribe(products => {
             this.products = products;
         });

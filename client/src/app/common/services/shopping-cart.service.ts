@@ -26,4 +26,11 @@ export class ShoppingCartService {
     this.products.push(product);
     this.productsSource.next(this.products);
   }
+
+  public removeProduct(productId: number): void {
+    this.products.forEach((element, index) => {
+      if (element.id === productId) { this.products.splice(index, 1); }
+    });
+    this.productsSource.next(this.products);
+  }
 }
