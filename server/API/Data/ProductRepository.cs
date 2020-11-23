@@ -51,6 +51,7 @@ namespace server.API.Data
             }
 
             // Filter result
+            Products = FilterByName(productParams.Name);
             Products = FilterByPrice(productParams.MinPrice, productParams.MaxPrice);
 
             return await PagingList<Product>.CreateList(Products, productParams.PageNumber, productParams.PageSize);
@@ -68,24 +69,21 @@ namespace server.API.Data
 
         private IQueryable<Product> FilterByPrice(decimal minPrice, decimal maxPrice) 
         {
-            if (minPrice > 0 || maxPrice > 0) {
+            if (minPrice > 0 || maxPrice > 0)
+            {
+                if (minPrice > 0 && maxPrice > 0) return Products.Where(p => p.Prices.Any(p => p.ValidPrice > minPrice && p.ValidPrice < maxPrice));
+                    
+                else if (minPrice > 0) return Products.Where(p => p.Prices.Any(p => p.ValidPrice > minPrice));
 
-                if (minPrice > 0 && maxPrice > 0) 
-                {
-                    return Products.Where(p => p.Prices.Any(p => p.ValidPrice > minPrice && p.ValidPrice < maxPrice));
-                }
-                else if (minPrice > 0) 
-                {
-                    return Products.Where(p => p.Prices.Any(p => p.ValidPrice > minPrice));
-                }
-                else {
-                    return Products.Where(p => p.Prices.Any(p => p.ValidPrice < maxPrice));
-                }
+                else return Products.Where(p => p.Prices.Any(p => p.ValidPrice < maxPrice));
             }
-            else {
-                return Products;
-            }
+            else return Products;
         }
-       
+
+        private IQueryable<Product> FilterByName(string name)
+        {
+            if (String.Equals(name, "") || name == null) return Products;
+            else return Products.Where(p => p.Name.ToLower().Contains(name));
+        }
     }
 }
