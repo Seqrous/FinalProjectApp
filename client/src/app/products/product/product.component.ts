@@ -5,6 +5,7 @@ import { ProductService } from '../product.service';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../models/product';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-product',
@@ -64,11 +65,19 @@ export class ProductComponent implements OnInit {
   }
 
   /**
+   * 
+   */
+  public selectedQuantity(event: MatSelectChange): void {
+    this.selected = event.value;
+  }
+
+  /**
    * Add the product to the shopping cart
    */
   public addToCart(): void {
     let product = Object.assign({}, this.product) as any;
     product = new Product(product);
+    product.quantity = +this.selected;
     this._shoppingCart.addProduct(product);
   }
 

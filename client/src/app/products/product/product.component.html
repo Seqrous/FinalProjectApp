@@ -82,7 +82,7 @@
                                         
                                         <mat-form-field class="mt-24" appearance="legacy">
                                             <mat-label>Quantity</mat-label>
-                                            <mat-select [(value)]="selected">
+                                            <mat-select [(value)]="selected" (selectionChange)="selectedQuantity($event)">
                                                 <mat-option value="1">1</mat-option>
                                                 <mat-option value="2">2</mat-option>
                                             </mat-select>

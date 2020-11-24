@@ -12,12 +12,12 @@ import { Product } from 'app/products/models/product';
 })
 export class QuickPanelComponent implements OnInit
 {
+    quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     date: Date;
     events: any[];
     notes: any[];
     settings: any;
     products: Product[];
-    selected = '1';
 
     /**
      * Constructor

@@ -22,9 +22,8 @@
                                 <div class="product-quantity">
                                     <mat-form-field class="mt-24 w-100" appearance="legacy">
                                         <mat-label>Quantity</mat-label>
-                                        <mat-select [(value)]="selected">
-                                            <mat-option value="1">1</mat-option>
-                                            <mat-option value="2">2</mat-option>
+                                        <mat-select [(value)]="product.quantity">
+                                            <mat-option [value]="option" *ngFor="let option of quantityOptions">{{ option }}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
