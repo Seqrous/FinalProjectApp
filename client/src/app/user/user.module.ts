@@ -7,6 +7,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
   ],
   declarations: [
     UserComponent,
