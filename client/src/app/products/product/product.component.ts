@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ProductDetails } from '../models/product-details';
 import { ProductService } from '../product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../models/product';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-product',
@@ -18,12 +21,18 @@ export class ProductComponent implements OnInit {
   /**
    * Constructor
    * 
+   * @param _productService 
+   * @param _route 
    * @param _location 
+   * @param _shoppingCart 
+   * @param _router 
    */
   constructor(
     private _productService: ProductService,
     private _route: ActivatedRoute,
     private _location: Location,
+    private _shoppingCart: ShoppingCartService,
+    private _router: Router,
   ) { }
 
   
@@ -47,8 +56,29 @@ export class ProductComponent implements OnInit {
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
 
-  back(): void {
+  public back(): void {
     this._location.back();
+  }
+
+  public redirect(route: string): void {
+    this._router.navigate([`${route}`]);
+  }
+
+  /**
+   * 
+   */
+  public selectedQuantity(event: MatSelectChange): void {
+    this.selected = event.value;
+  }
+
+  /**
+   * Add the product to the shopping cart
+   */
+  public addToCart(): void {
+    let product = Object.assign({}, this.product) as any;
+    product = new Product(product);
+    product.quantity = +this.selected;
+    this._shoppingCart.addProduct(product);
   }
 
   
@@ -62,7 +92,7 @@ export class ProductComponent implements OnInit {
    */
   private loadProduct(id: number): void {
     this._productService.getProduct(id).subscribe(res => {
-      this.product = res;;
+      this.product = res;
     });
   }
 }
