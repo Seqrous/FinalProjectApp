@@ -1,4 +1,4 @@
-<div class="page-layout carded fullwidth">
+<div id="order-checkout" class="page-layout carded fullwidth">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg accent"></div>
@@ -19,9 +19,27 @@
           <!-- CONTENT -->
           <div class="content p-24">
 
-            <div class="order-details">
+            <div class="order-details" fusePerfectScrollbar>
               <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let product of products">{{ product.name }}</mat-list-item>
+                <mat-list-item role="listitem" *ngFor="let product of products">
+                  <div class="product-info-wrapper">
+                    <div class="image-wrapper pt-12">
+                        <img src="assets/images/ecommerce/yosemite.jpg">
+                    </div>
+                    <div class="product-information ml-8" fxLayout="column">
+                        <div class="mat-title product-name mt-12">{{ product.name }}</div>
+                        <div class="mat-body-2 product-price">$ 10.00</div>
+                        <div class="product-quantity">
+                            <mat-form-field class="mt-24 w-100" appearance="legacy">
+                                <mat-label>Quantity</mat-label>
+                                <mat-select [(value)]="product.quantity">
+                                    <mat-option [value]="option" *ngFor="let option of [1,2,3,4,5]">{{ option }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                </mat-list-item>
               </mat-list>
             </div>
 
