@@ -19,21 +19,23 @@
           <!-- CONTENT -->
           <div class="content p-24">
 
-            <div class="order-details" fusePerfectScrollbar>
-              <mat-list role="list">
+            <div class="order-details">
+              <mat-list class="mb-16" role="list" fusePerfectScrollbar>
                 <mat-list-item role="listitem" *ngFor="let product of products">
                   <div class="product-info-wrapper">
                     <div class="image-wrapper pt-12">
                         <img src="assets/images/ecommerce/yosemite.jpg">
                     </div>
                     <div class="product-information ml-8" fxLayout="column">
-                        <div class="mat-title product-name mt-12">{{ product.name }}</div>
-                        <div class="mat-body-2 product-price">$ 10.00</div>
+                        <div class="name-price-wrapper">
+                          <div class="mat-title product-name mt-12">{{ product.name }}</div>
+                          <div class="mat-body-2 product-price">${{ (product.price * product.quantity).toFixed(2) }}</div>
+                        </div>
                         <div class="product-quantity">
-                            <mat-form-field class="mt-24 w-100" appearance="legacy">
+                            <mat-form-field class="w-100 mt-0" appearance="legacy">
                                 <mat-label>Quantity</mat-label>
                                 <mat-select [(value)]="product.quantity">
-                                    <mat-option [value]="option" *ngFor="let option of [1,2,3,4,5]">{{ option }}</mat-option>
+                                    <mat-option [value]="option" *ngFor="let option of [1,2,3,4,5,6,7,8,9]">{{ option }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -41,6 +43,12 @@
                 </div>
                 </mat-list-item>
               </mat-list>
+
+              <div class="payment-information-wrapper">
+                <div class="payment-information">
+                  <h3></h3>
+                </div>
+              </div>
             </div>
 
             <div class="user-information">
