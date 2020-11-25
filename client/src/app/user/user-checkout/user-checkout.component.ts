@@ -38,10 +38,11 @@ export class UserCheckoutComponent implements OnInit {
       firstName: [''],
       lastName: [''],
       email: [''],
+      company: [''],
       city: [''],
       zip: [''],
       streetAddress: [''],
-      country: ['']
+      country: [''],
     });
     this.secondFormGroup = this._formBuilder.group({
       shippingMethod: [''],

@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatListModule,
     MatSelectModule,
+    MatButtonModule,
   ],
   declarations: [
     UserComponent,

@@ -8,6 +8,11 @@
   .content {
     display: flex;
     flex-direction: row;
+
+    mat-horizontal-stepper {
+      width: 90%;
+      margin: auto;
+    }
   
     .order-details {
       flex: 1;
@@ -69,7 +74,33 @@
     
     .user-information {
       flex: 1;
-    }
+
+      .mat-horizontal-content {
+        text-align: center;
+      }
+
+      form {
+        width: auto;
+        margin-left: 3%;
+        margin-right: 3%;
+
+        button {
+          margin-top: 15px;
+        }
+      }
+
+      .personal-info {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        form {
+          margin-left: 0%;
+          width: 33%;
+          flex: 0;
+        }
+      }
+    }  
   }
 }
 
