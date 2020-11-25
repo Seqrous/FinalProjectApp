@@ -17,7 +17,7 @@
       <div class="content-card">
 
           <!-- CONTENT -->
-          <h1 class="ml-40 mb-0">Your products:</h1>
+          <h1 class="ml-40 mt-20 mb-0">Your products:</h1>
 
           <div class="content p-24">
 
@@ -127,56 +127,54 @@
                     </div>
                   </form>
                 </mat-step>
-                <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+                <mat-step [stepControl]="secondFormGroup" label="Payment information">
                   <form [formGroup]="secondFormGroup">
 
-                    <mat-form-field>
-                      <mat-label>Shipping method</mat-label>
-                      <input matInput formControlName="shippingMethod">
-                    </mat-form-field>
+                    <div class="payment-info">
+                      <mat-form-field>
+                        <mat-label>Name on the card *</mat-label>
+                        <input matInput placeholder="John Doe" formControlName="name">
+                      </mat-form-field>
 
-                    <mat-form-field>
-                      <mat-label>Name on the card</mat-label>
-                      <input matInput placeholder="John Doe" formControlName="name">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                      <mat-label>Credit card number</mat-label>
-                      <input matInput formControlName="creditCardNumber">
-                    </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>Credit card number *</mat-label>
+                        <input matInput formControlName="creditCardNumber">
+                      </mat-form-field>
                     
-                    <mat-form-field>
-                      <mat-label>Type</mat-label>
-                      <input matInput formControlName="creditCardType">
-                    </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>Type *</mat-label>
+                        <input matInput formControlName="creditCardType">
+                      </mat-form-field>
+                    </div>
 
-                    <mat-form-field>
-                      <mat-label>Verification number</mat-label>
-                      <input matInput formControlName="verificationNumber">
-                    </mat-form-field>
+                    <div class="payment-info">
+                      <mat-form-field>
+                        <mat-label>Verification number *</mat-label>
+                        <input matInput formControlName="verificationNumber">
+                      </mat-form-field>
 
-                    <mat-form-field>
-                      <mat-label>Month</mat-label>
-                      <input matInput formControlName="expirationMonth">
-                    </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>Month *</mat-label>
+                        <input matInput formControlName="expirationMonth">
+                      </mat-form-field>
 
-                    <mat-form-field>
-                      <mat-label>Year</mat-label>
-                      <input matInput formControlName="expirationYear">
-                    </mat-form-field>
-
+                      <mat-form-field>
+                        <mat-label>Year *</mat-label>
+                        <input matInput formControlName="expirationYear">
+                      </mat-form-field>
+                    </div>
                     <div>
                       <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                      <button mat-raised-button color="accent" matStepperNext>Next</button>
                     </div>
                   </form>
                 </mat-step>
                 <mat-step>
                   <ng-template matStepLabel>Done</ng-template>
-                  <p>You are now done.</p>
-                  <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  <div class="success-info">
+                    <div class="mat-display-3 mt-40 mb-0">Success</div>
+                    <img src="assets/images/ecommerce/success.png">
+                    <div class="mat-headline mt-5">Your order has been placed</div>
                   </div>
                 </mat-step>
               </mat-horizontal-stepper>

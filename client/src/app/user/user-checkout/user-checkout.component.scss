@@ -8,6 +8,7 @@
   .content {
     display: flex;
     flex-direction: row;
+    margin-top: -10px;
 
     mat-horizontal-stepper {
       width: 90%;
@@ -24,7 +25,7 @@
       }
       
       mat-list {
-        max-height: 500px;
+        max-height: 420px;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
@@ -99,6 +100,16 @@
           width: 33%;
           flex: 0;
         }
+      }
+
+      .payment-info {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+      }
+
+      .success-info {
+        text-align: center;
       }
     }  
   }
