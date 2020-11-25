@@ -16,13 +16,16 @@
       <!-- CONTENT CARD -->
       <div class="content-card">
 
+          <div class="toolbar"></div>
+          
           <!-- CONTENT -->
           <div class="content p-24">
 
             <div class="order-details">
-              <mat-list class="mb-16" role="list" fusePerfectScrollbar>
+              <mat-list class="mb-16 pt-0" role="list" fusePerfectScrollbar>
+                <mat-divider></mat-divider>
                 <mat-list-item role="listitem" *ngFor="let product of products">
-                  <div class="product-info-wrapper">
+                  <div class="product-info-wrapper mb-12">
                     <div class="image-wrapper pt-12">
                         <img src="assets/images/ecommerce/yosemite.jpg">
                     </div>
@@ -41,6 +44,7 @@
                         </div>
                     </div>
                 </div>
+                <mat-divider class="mt-12"></mat-divider>
                 </mat-list-item>
               </mat-list>
 
