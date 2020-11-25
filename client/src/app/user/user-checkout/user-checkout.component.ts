@@ -35,10 +35,22 @@ export class UserCheckoutComponent implements OnInit {
 
   private buildForms(): void {
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      city: [''],
+      zip: [''],
+      streetAddress: [''],
+      country: ['']
     });
     this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+      shippingMethod: [''],
+      name: [''],
+      creditCardNumber: [''],
+      creditCardType: [''],
+      verificationNumber: [''],
+      expirationMonth: [''],
+      expirationYear: ['']
     });
   }
 }
