@@ -138,35 +138,44 @@
                           </mat-checkbox>
                         </section>
 
-                        <mat-form-field>
-                          <mat-label>Name on the card *</mat-label>
-                          <input matInput placeholder="John Doe" formControlName="name">
-                        </mat-form-field>
+                        <div class="name-number-card">
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Name on the card *</mat-label>
+                              <input matInput placeholder="John Doe" formControlName="name">
+                            </mat-form-field>
+                          </form>
 
-                        <mat-form-field>
-                          <mat-label>Credit card number *</mat-label>
-                          <input matInput formControlName="creditCardNumber">
-                        </mat-form-field>
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Credit card number *</mat-label>
+                              <input matInput formControlName="creditCardNumber">
+                            </mat-form-field>
+                          </form>
+                        </div>
                       
-                        <mat-form-field>
-                          <mat-label>Type *</mat-label>
-                          <input matInput formControlName="creditCardType">
-                        </mat-form-field>
+                        <div class="expiration-verification-card">
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Verification number *</mat-label>
+                              <input matInput formControlName="verificationNumber">
+                            </mat-form-field>
+                          </form>
 
-                        <mat-form-field>
-                          <mat-label>Verification number *</mat-label>
-                          <input matInput formControlName="verificationNumber">
-                        </mat-form-field>
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Month *</mat-label>
+                              <input matInput formControlName="expirationMonth">
+                            </mat-form-field>
+                          </form>
 
-                        <mat-form-field>
-                          <mat-label>Month *</mat-label>
-                          <input matInput formControlName="expirationMonth">
-                        </mat-form-field>
-
-                        <mat-form-field>
-                          <mat-label>Year *</mat-label>
-                          <input matInput formControlName="expirationYear">
-                        </mat-form-field>
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Year *</mat-label>
+                              <input matInput formControlName="expirationYear">
+                            </mat-form-field>
+                          </form>
+                        </div>
                       <div>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-raised-button color="accent" matStepperNext>Next</button>

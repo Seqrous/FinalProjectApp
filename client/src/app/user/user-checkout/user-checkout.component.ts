@@ -49,7 +49,6 @@ export class UserCheckoutComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       name: [''],
       creditCardNumber: [''],
-      creditCardType: [''],
       verificationNumber: [''],
       expirationMonth: [''],
       expirationYear: ['']

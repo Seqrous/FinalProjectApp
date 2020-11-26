@@ -118,8 +118,39 @@
 
             .shipping-img {
               margin-top: -6px;
+              margin-right: 10px;
               height: 36px;
               width: auto;
+            }
+          }
+        }
+
+        .name-number-card {
+          display: flex;
+          flex-direction: row;
+          gap: 20px;
+
+          form {
+            flex: 1;
+            min-width: 0;
+
+            mat-form-field {
+              width: 100%;
+            }
+          }
+        }
+
+        .expiration-verification-card {
+          display: flex;
+          flex-direction: row;
+          gap: 15px;
+
+          form {
+            flex: 1;
+            min-width: 0;
+
+            mat-form-field {
+              width: 100%;
             }
           }
         }
