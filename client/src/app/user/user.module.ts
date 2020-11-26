@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatSelectModule,
     MatButtonModule,
+    MatCheckboxModule,
   ],
   declarations: [
     UserComponent,

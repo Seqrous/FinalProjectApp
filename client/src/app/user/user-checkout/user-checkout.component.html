@@ -130,42 +130,48 @@
                 <mat-step [stepControl]="secondFormGroup" label="Payment information">
                   <form [formGroup]="secondFormGroup">
 
-                    <div class="payment-info">
-                      <mat-form-field>
-                        <mat-label>Name on the card *</mat-label>
-                        <input matInput placeholder="John Doe" formControlName="name">
-                      </mat-form-field>
+                    <div class="payment-information mt-20">
 
-                      <mat-form-field>
-                        <mat-label>Credit card number *</mat-label>
-                        <input matInput formControlName="creditCardNumber">
-                      </mat-form-field>
-                    
-                      <mat-form-field>
-                        <mat-label>Type *</mat-label>
-                        <input matInput formControlName="creditCardType">
-                      </mat-form-field>
-                    </div>
+                        <section class="shipping-information">
+                          <mat-checkbox [checked]="checked" (click)="$event.preventDefault()">
+                            <img class="shipping-img ml-16" src="assets/images/ecommerce/gls.png"><strong> $10.00</strong> 
+                          </mat-checkbox>
+                        </section>
 
-                    <div class="payment-info">
-                      <mat-form-field>
-                        <mat-label>Verification number *</mat-label>
-                        <input matInput formControlName="verificationNumber">
-                      </mat-form-field>
+                        <mat-form-field>
+                          <mat-label>Name on the card *</mat-label>
+                          <input matInput placeholder="John Doe" formControlName="name">
+                        </mat-form-field>
 
-                      <mat-form-field>
-                        <mat-label>Month *</mat-label>
-                        <input matInput formControlName="expirationMonth">
-                      </mat-form-field>
+                        <mat-form-field>
+                          <mat-label>Credit card number *</mat-label>
+                          <input matInput formControlName="creditCardNumber">
+                        </mat-form-field>
+                      
+                        <mat-form-field>
+                          <mat-label>Type *</mat-label>
+                          <input matInput formControlName="creditCardType">
+                        </mat-form-field>
 
-                      <mat-form-field>
-                        <mat-label>Year *</mat-label>
-                        <input matInput formControlName="expirationYear">
-                      </mat-form-field>
-                    </div>
-                    <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-raised-button color="accent" matStepperNext>Next</button>
+                        <mat-form-field>
+                          <mat-label>Verification number *</mat-label>
+                          <input matInput formControlName="verificationNumber">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                          <mat-label>Month *</mat-label>
+                          <input matInput formControlName="expirationMonth">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                          <mat-label>Year *</mat-label>
+                          <input matInput formControlName="expirationYear">
+                        </mat-form-field>
+                      <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="accent" matStepperNext>Next</button>
+                      </div>
+
                     </div>
                   </form>
                 </mat-step>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { Product } from 'app/products/models/product';
@@ -6,7 +6,8 @@ import { Product } from 'app/products/models/product';
 @Component({
   selector: 'app-user-checkout',
   templateUrl: './user-checkout.component.html',
-  styleUrls: ['./user-checkout.component.scss']
+  styleUrls: ['./user-checkout.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserCheckoutComponent implements OnInit {
 
@@ -14,6 +15,7 @@ export class UserCheckoutComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   products: Product[];
+  checked = true;
 
   constructor(
     private _formBuilder: FormBuilder,
