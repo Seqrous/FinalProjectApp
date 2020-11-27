@@ -121,6 +121,14 @@
                           <input matInput formControlName="streetAddress">
                         </mat-form-field>
                       </form>
+
+                      <form name="form" class="create-account-checkbox" [formGroup]="firstFormGroup">
+                        <section>
+                          <mat-checkbox>
+                          Create account
+                          </mat-checkbox>
+                        </section>
+                      </form>
                     </div>
                     <div>
                       <button mat-raised-button color="accent" matStepperNext>Next</button>
