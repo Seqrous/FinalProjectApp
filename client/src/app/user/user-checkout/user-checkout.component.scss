@@ -1,6 +1,11 @@
 #order-checkout {
   height: 100%;
 
+  .back-button {
+    position: relative;
+    bottom: 4px;
+  }
+
   .mat-checkbox-frame,
   .mat-checkbox-background,
   .mat-checkbox-anim-unchecked-checked

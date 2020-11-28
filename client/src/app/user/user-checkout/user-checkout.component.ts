@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
 import { Product } from 'app/products/models/product';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-checkout',
@@ -25,10 +26,12 @@ export class UserCheckoutComponent implements OnInit {
    * 
    * @param _formBuilder 
    * @param _shoppingCartService 
+   * @param _location
    */
   constructor(
     private _formBuilder: FormBuilder,
     private _shoppingCartService: ShoppingCartService,
+    private _location: Location,
     ) {}
 
   // -----------------------------------------------------------------------------------------------------
@@ -66,6 +69,13 @@ export class UserCheckoutComponent implements OnInit {
    */
   public getTotal(): number {
     return this.products.reduce((a, b) => +a + (+b.price * b.quantity), 0);
+  }
+
+  /**
+   * Navigate back
+   */
+  public back(): void {
+    this._location.back();
   }
 
   // -----------------------------------------------------------------------------------------------------
