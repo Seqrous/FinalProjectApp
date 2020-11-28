@@ -96,7 +96,7 @@
                     <div class="personal-info">
                       <form name="form" [formGroup]="firstFormGroup">
                         <mat-form-field>
-                          <mat-label>Company</mat-label>
+                          <mat-label>Company (optional)</mat-label>
                           <input matInput formControlName="company">
                         </mat-form-field>
                       </form>
@@ -140,7 +140,7 @@
                       </form>
                     </div>
                     <div>
-                      <button mat-raised-button color="accent" class="ml-20" (click)="verifyStep()" matStepperNext>Next</button>
+                      <button mat-raised-button color="accent" class="ml-20" (click)="verifyStep($event)" matStepperNext>Next</button>
                     </div>
                   </form>
                 </mat-step>
@@ -195,7 +195,7 @@
                         </div>
                       <div>
                         <button mat-button matStepperPrevious>Back</button>
-                        <button mat-raised-button color="accent" matStepperNext>Next</button>
+                        <button mat-raised-button color="accent" matStepperNext (click)="verifyStep($event)">Next</button>
                       </div>
 
                     </div>

@@ -51,8 +51,14 @@ export class UserCheckoutComponent implements OnInit {
    * Verify form step
    * Toggle true if all fields have been filled correctly
    */
-  public verifyStep(): void {
-    this.stepper.selected.completed = this.firstFormGroup.valid;
+  public verifyStep(event: any): void {
+    const currentStepIndex = this.stepper.steps.toArray().indexOf(this.stepper.selected);
+    if (event.srcElement.innerText === 'Next' && currentStepIndex === 0) {
+      this.stepper.selected.completed = this.firstFormGroup.valid;
+    }
+    else if (event.srcElement.innerText === 'Next' && currentStepIndex === 1) {
+      this.stepper.selected.completed = this.secondFormGroup.valid;
+    }
   }
 
   /**
