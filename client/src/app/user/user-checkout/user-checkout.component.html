@@ -49,9 +49,18 @@
               </mat-list>
 
               <div class="payment-information-wrapper">
-                <div class="payment-information">
-                  <h3></h3>
-                </div>
+                <mat-list class='list-labels'>
+                  <mat-list-item>Products total:</mat-list-item>
+                  <mat-list-item>VAT (+25%):</mat-list-item>
+                  <mat-list-item>Shipping cost:</mat-list-item>
+                  <mat-list-item>Order total:</mat-list-item>
+                </mat-list>
+                <mat-list class='list-values'>
+                  <mat-list-item>${{ getTotal().toFixed(2) }}</mat-list-item>
+                  <mat-list-item>${{ (getTotal() * 1.25).toFixed(2) }}</mat-list-item>
+                  <mat-list-item>$10.00</mat-list-item>
+                  <mat-list-item>${{ (getTotal() * 1.25 + 10).toFixed(2) }}</mat-list-item>
+                </mat-list>
               </div>
             </div>
 

@@ -55,6 +55,13 @@ export class UserCheckoutComponent implements OnInit {
     this.stepper.selected.completed = this.firstFormGroup.valid;
   }
 
+  /**
+   * Calculate total price of products
+   */
+  public getTotal(): number {
+    return this.products.reduce((a, b) => +a + (+b.price * b.quantity), 0);
+  }
+
   // -----------------------------------------------------------------------------------------------------
   // @ Private methods
   // -----------------------------------------------------------------------------------------------------
