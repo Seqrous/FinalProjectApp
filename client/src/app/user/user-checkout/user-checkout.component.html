@@ -1,3 +1,231 @@
-<p>
-  user-checkout works!
-</p>
+<div id="order-checkout" class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+      <!-- CONTENT HEADER -->
+      <div class="header accent p-24" fxLayout="row">
+        <h1 class="ml-0 mt-32">
+          <button mat-icon-button class="back-button mr-0" (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+         Order Checkout
+        </h1>
+      </div>
+      <!-- / CONTENT HEADER -->
+
+      <!-- CONTENT CARD -->
+      <div class="content-card">
+
+          <!-- CONTENT -->
+          <h1 class="ml-40 mt-20 mb-0">Your products:</h1>
+
+          <div class="content p-24">
+
+            <div class="order-details">
+              <mat-list class="mb-16 pt-0" role="list" fusePerfectScrollbar>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem" *ngFor="let product of products">
+                  <div class="product-info-wrapper mb-12">
+                    <div class="image-wrapper pt-12">
+                        <img src="assets/images/ecommerce/yosemite.jpg">
+                    </div>
+                    <div class="product-information ml-8" fxLayout="column">
+                        <div class="name-price-wrapper">
+                          <div class="mat-title product-name mt-12">{{ product.name }}</div>
+                          <div class="mat-body-2 product-price">${{ (product.price * product.quantity).toFixed(2) }}</div>
+                        </div>
+                        <div class="product-quantity">
+                            <mat-form-field class="w-100 mt-0" appearance="legacy">
+                                <mat-label>Quantity</mat-label>
+                                <mat-select [(value)]="product.quantity">
+                                    <mat-option [value]="option" *ngFor="let option of [1,2,3,4,5,6,7,8,9]">{{ option }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <mat-divider class="mt-12"></mat-divider>
+                </mat-list-item>
+              </mat-list>
+
+              <div class="payment-information-wrapper">
+                <mat-list class='list-labels'>
+                  <mat-list-item>Products total:</mat-list-item>
+                  <mat-list-item>VAT (+25%):</mat-list-item>
+                  <mat-list-item>Shipping cost:</mat-list-item>
+                  <mat-list-item>Order total:</mat-list-item>
+                </mat-list>
+                <mat-list class='list-values'>
+                  <mat-list-item>${{ getTotal().toFixed(2) }}</mat-list-item>
+                  <mat-list-item>${{ (getTotal() * 1.25).toFixed(2) }}</mat-list-item>
+                  <mat-list-item>$10.00</mat-list-item>
+                  <mat-list-item>${{ (getTotal() * 1.25 + 10).toFixed(2) }}</mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+
+            <div class="user-information">
+              <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="firstFormGroup">
+                  <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Personal information</ng-template>
+
+                    <div class="personal-info">
+                      <form class="email" name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>E-mail address *</mat-label>
+                          <input matInput placeholder="john.doe@gmail.com" formControlName="email">
+                        </mat-form-field>
+                      </form>
+                    
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>First name  *</mat-label>
+                          <input matInput placeholder="John" formControlName="firstName">
+                        </mat-form-field>
+                      </form>
+
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>Last name *</mat-label>
+                          <input matInput placeholder="Doe" formControlName="lastName">
+                        </mat-form-field>
+                      </form>
+                    </div>
+
+                    <div class="personal-info">
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>Company (optional)</mat-label>
+                          <input matInput formControlName="company">
+                        </mat-form-field>
+                      </form>
+
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>City  *</mat-label>
+                          <input matInput formControlName="city">
+                        </mat-form-field>
+                      </form>
+                      
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>Country  *</mat-label>
+                          <input matInput formControlName="country">
+                        </mat-form-field>
+                      </form>
+                    </div>
+
+                    <div class="personal-info">
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>Postal code  *</mat-label>
+                          <input matInput formControlName="zip">
+                        </mat-form-field>
+                      </form>
+
+                      <form name="form" [formGroup]="firstFormGroup">
+                        <mat-form-field>
+                          <mat-label>Address  *</mat-label>
+                          <input matInput formControlName="streetAddress">
+                        </mat-form-field>
+                      </form>
+
+                      <form name="form" class="create-account-checkbox" [formGroup]="firstFormGroup">
+                        <section>
+                          <mat-checkbox>
+                          Create account
+                          </mat-checkbox>
+                        </section>
+                      </form>
+                    </div>
+                    <div>
+                      <button mat-raised-button color="accent" class="ml-20" (click)="verifyStep($event)" matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup" label="Payment information">
+                  <form [formGroup]="secondFormGroup">
+
+                    <div class="payment-information mt-20">
+
+                        <section class="shipping-information">
+                          <mat-checkbox [checked]="checked" (click)="$event.preventDefault()">
+                            <img class="shipping-img ml-16" src="assets/images/ecommerce/gls.png"><strong> $10.00</strong> 
+                          </mat-checkbox>
+                        </section>
+
+                        <div class="name-number-card">
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Name on the card *</mat-label>
+                              <input matInput placeholder="John Doe" formControlName="name">
+                            </mat-form-field>
+                          </form>
+
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Credit card number *</mat-label>
+                              <input matInput formControlName="creditCardNumber">
+                            </mat-form-field>
+                          </form>
+                        </div>
+                      
+                        <div class="expiration-verification-card">
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Verification number *</mat-label>
+                              <input matInput formControlName="verificationNumber">
+                            </mat-form-field>
+                          </form>
+
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Month *</mat-label>
+                              <input matInput formControlName="expirationMonth">
+                            </mat-form-field>
+                          </form>
+
+                          <form name="form" [formGroup]="secondFormGroup">
+                            <mat-form-field>
+                              <mat-label>Year *</mat-label>
+                              <input matInput formControlName="expirationYear">
+                            </mat-form-field>
+                          </form>
+                        </div>
+                      <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-raised-button color="accent" matStepperNext (click)="verifyStep($event)">Next</button>
+                      </div>
+
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel>Done</ng-template>
+                  <div class="success-info">
+                    <div class="mat-display-3 mt-40 mb-0">Success</div>
+                    <img src="assets/images/ecommerce/success.png">
+                    <div class="mat-headline mt-5">Your order has been placed</div>
+                  </div>
+                </mat-step>
+              </mat-horizontal-stepper>
+            </div>
+
+          </div>
+          <!-- / CONTENT -->
+
+      </div>
+      <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>
+
+

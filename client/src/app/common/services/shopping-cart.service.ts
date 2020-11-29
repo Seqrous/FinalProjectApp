@@ -29,6 +29,7 @@ export class ShoppingCartService {
     } else {
       this.productUpdate(product);
     }
+    this.updateLocalStorage();
     this.productsSource.next(this.products);
   }
 
@@ -70,5 +71,13 @@ export class ShoppingCartService {
         return;
       }
     }
+  }
+
+  /**
+   * Saves the shopping car products in the local storage
+   */
+  private updateLocalStorage(): void {
+    if (localStorage.getItem('products')) { localStorage.removeItem('products'); }
+    localStorage.setItem('products', JSON.stringify(this.products));
   }
 }
