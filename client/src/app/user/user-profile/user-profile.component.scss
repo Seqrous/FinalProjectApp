@@ -1,0 +1,59 @@
+@import "src/@fuse/scss/fuse";
+
+#profile {
+
+    .header {
+        height: 250px;
+        min-height: 250px;
+        max-height: 250px;
+        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat 0 45%;
+        background-size: cover;
+        display: flex;
+        align-items: flex-end;
+
+        .user-info {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .profile-image {
+                margin-right: 24px;
+
+                @include media-breakpoint('sm') {
+                    margin: 0 0 16px 0;
+                }
+            }
+
+            .name {
+                flex: 1;
+                font-size: 34px;
+                color: #FFFFFF;
+
+                @include media-breakpoint('sm') {
+                    margin-bottom: 32px;
+                }
+            }
+
+            .change-avatar {
+                text-align: center;
+                width: 130px !important;
+                height: 40px !important;
+                min-width: unset !important;
+                min-height: unset !important;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+
+        mat-tab-group {
+            height: 100%;
+
+            .mat-tab-body-wrapper {
+                flex-grow: 1;
+            }
+        }
+    }
+}
