@@ -47,8 +47,14 @@
 
     #about {
         flex: 1;
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        width: 80%;
+        margin: auto;
 
         .profile-box {
+            flex: 1;
             border-radius: 4px;
             overflow: hidden;
             margin-bottom: 16px;
@@ -56,13 +62,15 @@
     
             header {
                 padding: 16px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
     
                 .title {
+                    line-height: 40px;
+                    height: 40px;
                     font-size: 17px;
-                }
-    
-                .more {
-                    cursor: pointer;
+                    flex: 1;
                 }
             }
     
