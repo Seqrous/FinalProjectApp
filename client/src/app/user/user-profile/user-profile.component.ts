@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddressDialogComponent } from './address-dialog/address-dialog.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public addressDialog: MatDialog,
+  ) { }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {}
+
+  public openDialog(): void {
+    const dialogRef = this.addressDialog.open(AddressDialogComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
-
 }
