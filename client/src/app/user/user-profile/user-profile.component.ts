@@ -17,7 +17,9 @@ export class UserProfileComponent implements OnInit {
 
   public openDialog(): void {
     const dialogRef = this.addressDialog.open(AddressDialogComponent, {
-      width: '300px',
+      width: '360px',
+      height: '500px',
+      panelClass: 'address-dialog-class'
     });
 
     dialogRef.afterClosed().subscribe(result => {
