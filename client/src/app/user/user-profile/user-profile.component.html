@@ -20,7 +20,7 @@
     <div class="profile-box info-box general" fxLayout="column">
       <header class="accent">
           <div class="title">Billing address</div>
-          <button mat-icon-button (click)="openDialog()">
+          <button mat-icon-button (click)="openDialog('address-dialog')">
             <mat-icon>edit</mat-icon>
           </button>
       </header>
@@ -57,7 +57,7 @@
     <div class="profile-box info-box general" fxLayout="column">
       <header class="accent">
           <div class="title">User Information</div>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="openDialog('account-dialog')">
             <mat-icon>edit</mat-icon>
           </button>
       </header>

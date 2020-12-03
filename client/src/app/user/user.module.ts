@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserComponent } from './user.component';
 import { AddressDialogComponent } from './user-profile/address-dialog/address-dialog.component';
+import { AccountDialogComponent } from './user-profile/account-dialog/account-dialog.component';
 import { UserRoutingModule } from './user-routing.module';
 import { UserCheckoutComponent } from './user-checkout/user-checkout.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -40,6 +41,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     UserCheckoutComponent,
     UserProfileComponent,
     AddressDialogComponent,
+    AccountDialogComponent,
   ]
 })
 export class UserModule { }
