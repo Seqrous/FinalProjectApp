@@ -1,36 +1,57 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using API.Entities;
 using API.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        private DynamoDBContext _context;
+
+        public UserRepository(IAmazonDynamoDB dynamoDbClient)
         {
-            _context = context;
+            if (dynamoDbClient == null) throw new ArgumentNullException(nameof(dynamoDbClient));
+            _context = new DynamoDBContext(dynamoDbClient);
         }
-        public async Task<AppUser> GetUserByIdAsync(int id)
+
+        public async Task<AppUser> GetUserByIdAsync(string id)
         {
-            return await _context.Users.FindAsync(id);
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            throw new NotImplementedException();
         }
 
         public async Task<bool> SaveAllAsync()
         {
-            return await _context.SaveChangesAsync() > 0;
+            throw new NotImplementedException();
         }
 
         public void Update(AppUser user)
         {
-            _context.Entry(user).State = EntityState.Modified;
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Order>> GetUserOrders(string userId)
+        {
+            var conf = new DynamoDBOperationConfig {
+                OverrideTableName = "FinalProject",
+                IndexName = "Invoices"
+            };
+
+            conf.QueryFilter = new List<ScanCondition>();   
+            conf.QueryFilter.Add(new ScanCondition("PaymentDate", ScanOperator.GreaterThanOrEqual, (long)1));
+
+            var orders = await _context.QueryAsync<Order>(userId, conf).GetRemainingAsync();
+
+            return orders;
         }
     }
 }

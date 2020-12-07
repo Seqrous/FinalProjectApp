@@ -1,11 +1,12 @@
+using System;
 using System.Threading.Tasks;
 using API.Controllers;
 using API.Entities;
 using API.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using server.API.DTOs.Products;
-using server.API.Interfaces;
+using API.DTOs.Products;
+using API.Interfaces;
 
 namespace server.API.Controllers
 {
@@ -27,7 +28,7 @@ namespace server.API.Controllers
             var product = _mapper.Map<Product>(productDto);
 
             // Insert to the database
-            await _productContext.InsertProduct(product);
+            throw new NotImplementedException();
 
             // Map Product entity to ProductDto
             var productToReturn = _mapper.Map<ProductDto>(product);
@@ -36,7 +37,7 @@ namespace server.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> FindProductByID(int id) 
+        public async Task<ActionResult<ProductDto>> FindProductByID(string id) 
         {
             var product = await _productContext.GetProductByIdAsync(id);
            

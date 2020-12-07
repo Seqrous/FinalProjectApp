@@ -1,23 +1,19 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(ITokenService tokenService)
         {
             this._tokenService = tokenService;
-            this._context = context;
         }
 
         [HttpPost("register")]
@@ -38,8 +34,6 @@ namespace API.Controllers
             };
 
             // Save to the database
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
 
             return new AuthenticationDto
             {
@@ -52,7 +46,7 @@ namespace API.Controllers
         public async Task<ActionResult<AuthenticationDto>> Login(LoginDto loginDto)
         {
             // Get the user with the matching email
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
+            var user = (AppUser)null;
 
             if (user == null) return Unauthorized("Invalid email");
 
@@ -76,7 +70,7 @@ namespace API.Controllers
 
         private async Task<bool> UserExists(string email)
         {
-            return await _context.Users.AnyAsync(x => x.Email == email);
+            throw new System.NotImplementedException();
         }
     }
 }

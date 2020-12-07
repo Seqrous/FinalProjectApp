@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Helpers;
 
-namespace server.API.Interfaces
+namespace API.Interfaces
 {
     public interface IProductRepository
     {
@@ -10,12 +11,6 @@ namespace server.API.Interfaces
             Updates the product
         */
         void Update(Product product);
-
-        /*
-            Saves all the changes asynchronously and track new entity
-        */
-        Task<bool> SaveAllAsync();
-
         /* 
             Insert a product
         */
@@ -24,7 +19,7 @@ namespace server.API.Interfaces
         /*
             Get product by its ID
         */
-        Task<Product> GetProductByIdAsync(int id);
+        Task<Product> GetProductByIdAsync(string id);
 
         /*
             Get product by its Name
