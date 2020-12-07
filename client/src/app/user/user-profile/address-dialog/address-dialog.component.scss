@@ -1,0 +1,30 @@
+::ng-deep .address-dialog-class {
+
+    mat-dialog-container {
+        padding: 0px;
+
+        .dialog-content-wrapper {
+
+            mat-toolbar {
+                
+                .span {
+                    margin: auto;
+                }
+            }
+
+            form {
+                text-align: center;
+
+                mat-form-field {
+                    width: 80%;
+                }
+            }
+
+            .dialog-buttons-wrapper {
+                width: 80%;
+                margin: auto;
+                text-align: right;
+            }
+        }
+    }
+}
