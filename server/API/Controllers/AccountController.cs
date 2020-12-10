@@ -5,6 +5,7 @@ using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -53,11 +54,17 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationDto>> Login(LoginDto loginDto)
         {
-            // Get the user with the matching email
-            var user = (AppUser)null;
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Users"
+            };
+            
+            var users = await _context.QueryAsync<AppUser>(loginDto.Email,conf).GetRemainingAsync();
+            var user = users.FirstOrDefault();
 
             if (user == null) return Unauthorized("Invalid email");
-
+            
             // Get the same hash used for encrypting password during registration
             using var hmac = new HMACSHA512(user.PasswordSalt);
 

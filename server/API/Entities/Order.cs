@@ -6,7 +6,7 @@ namespace API.Entities
     public class Order
     {
         [DynamoDBHashKey]
-        public string GlobalIndex { get; set; }
+        public string ID { get; set; }
 
         [DynamoDBRangeKey]
         public string Sort { get; set; }
