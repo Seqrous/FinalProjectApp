@@ -43,7 +43,7 @@ namespace server.API.Data
         {
             // Filter records that are products
             List<ScanCondition> conditions = new List<ScanCondition>();
-            conditions.Add(new ScanCondition("GlobalIndex", ScanOperator.Contains, "PRODUCT"));
+            conditions.Add(new ScanCondition("ID", ScanOperator.Contains, "PRODUCT"));
 
             // Return the products
             var products = await _context.ScanAsync<Product>(conditions).GetRemainingAsync();
