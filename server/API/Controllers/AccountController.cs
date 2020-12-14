@@ -93,7 +93,6 @@ namespace API.Controllers
             List<ScanCondition> conditions = new List<ScanCondition>();
             conditions.Add(new ScanCondition("Email", ScanOperator.Equal, email));
             var users = await _context.ScanAsync<AppUser>(conditions, conf).GetRemainingAsync();
-            //if (users.Count == 0) return false; else return true;
             return users.Count != 0;
         }
     }
