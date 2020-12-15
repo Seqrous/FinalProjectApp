@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -21,7 +22,19 @@ namespace API.Data
 
         public async Task<AppUser> GetUserByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Users"
+            };
+
+            conf.QueryFilter = new List<ScanCondition>();
+            conf.QueryFilter.Add(new ScanCondition("ID", ScanOperator.Equal, id));
+
+            var users = await _context.QueryAsync<AppUser>(id, conf).GetRemainingAsync();
+            var user = users.FirstOrDefault();
+
+            return user;
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()

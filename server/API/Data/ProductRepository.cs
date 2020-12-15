@@ -36,7 +36,19 @@ namespace server.API.Data
 
         public async Task<Product> GetProductByNameAsync(string name)
         {
-            throw new System.NotImplementedException();
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Products"
+            };
+
+            conf.QueryFilter = new List<ScanCondition>();
+            conf.QueryFilter.Add(new ScanCondition("Sort", ScanOperator.Equal, name));
+
+            var products = await _context.QueryAsync<Product>(name, conf).GetRemainingAsync();
+            var prod = products.FirstOrDefault();
+
+            return prod;
         }
 
         public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
