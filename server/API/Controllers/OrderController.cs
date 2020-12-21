@@ -41,14 +41,5 @@ namespace server.API.Controllers
             return Ok(orderToReturn);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<OrderDto>> GetAllOrders()
-        {
-            var orders = await _orderRepository.GetAllOrders();
-
-            var ordersToReturn = _mapper.Map<OrderDto>(orders);
-
-            return Ok(ordersToReturn);
-        }
     }
 }

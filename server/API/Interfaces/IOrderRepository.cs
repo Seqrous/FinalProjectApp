@@ -10,6 +10,5 @@ namespace server.API.Interfaces
     {
         Task<IEnumerable<Order>> GetUserOrders(string userId);
         Task<Order> GetOrderById(string orderId);
-        Task<IEnumerable<Order>> GetAllOrders();
     }
 }

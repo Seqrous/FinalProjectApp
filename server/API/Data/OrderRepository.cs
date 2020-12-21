@@ -36,17 +36,6 @@ namespace server.API.Data
             return order.FirstOrDefault();
         }
 
-        public async Task<IEnumerable<Order>> GetAllOrders()
-        {
-            List<ScanCondition> conditions = new List<ScanCondition>();
-            conditions.Add(new ScanCondition("ID", ScanOperator.Contains, "ORDER"));
-
-            // Return the products
-            var orders = await _context.ScanAsync<Order>(conditions).GetRemainingAsync();
-            return orders;
-        
-        }
-
         public async Task<IEnumerable<Order>> GetUserOrders(string userId)
         {
             var conf = new DynamoDBOperationConfig
