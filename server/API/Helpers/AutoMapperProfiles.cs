@@ -22,14 +22,10 @@ namespace API.Helpers
             CreateMap<PagingList<Product>, PagedProductDto>();
 
             CreateMap<Order, OrderDto>()
-<<<<<<< HEAD
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ID));
-=======
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ID))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Sort));
             CreateMap<Orderline, OrderlineDto>()
                 .ForMember(dest => dest.Sort, opt => opt.MapFrom(src => src.ProductId));
->>>>>>> 0034d15 (full commit wtth all the missing classes)
         }
     }
 }
