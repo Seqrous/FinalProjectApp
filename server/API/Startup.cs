@@ -6,6 +6,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+<<<<<<< HEAD
+=======
+using server.API.Data;
+using server.API.Interfaces;
+>>>>>>> 0034d15 (full commit wtth all the missing classes)
 
 namespace API
 {
@@ -25,6 +30,10 @@ namespace API
             services.AddControllers();
             services.AddIdentityServices(_config);
             services.AddHealthChecks();
+<<<<<<< HEAD
+=======
+            services.AddScoped<IOrderRepository, OrderRepository>();
+>>>>>>> 0034d15 (full commit wtth all the missing classes)
 
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddTransient<IDynamoDBContext, DynamoDBContext>();
