@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using server.API.Data;
+using server.API.Interfaces;
 
 namespace API
 {
@@ -25,6 +27,7 @@ namespace API
             services.AddControllers();
             services.AddIdentityServices(_config);
             services.AddHealthChecks();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddTransient<IDynamoDBContext, DynamoDBContext>();
