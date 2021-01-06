@@ -17,10 +17,15 @@ namespace API.Interfaces
         /* 
             Returns a user with the given ID asynchronously
         */
-        Task<AppUser> GetUserByIdAsync(int id);
+        Task<AppUser> GetUserByIdAsync(string id);
         /* 
             Returns all users asynchronously
         */
         Task<IEnumerable<AppUser>> GetUsersAsync();
+
+        /*
+            Get orders specific to a user
+        */
+        Task<IEnumerable<Order>> GetUserOrders(string id);
     }
 }

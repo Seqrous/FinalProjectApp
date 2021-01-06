@@ -1,9 +1,11 @@
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using API.Extensions;
 
 namespace API
 {
@@ -23,7 +25,10 @@ namespace API
             services.AddControllers();
             services.AddIdentityServices(_config);
             services.AddHealthChecks();
-            
+
+            services.AddAWSService<IAmazonDynamoDB>();
+            services.AddTransient<IDynamoDBContext, DynamoDBContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,8 +41,8 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyHeader());
-            
+            app.UseCors(policy => policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+
             app.UseAuthentication();
 
             app.UseAuthorization();

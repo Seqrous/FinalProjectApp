@@ -1,15 +1,18 @@
-using System;
 using System.Collections.Generic;
+using Amazon.DynamoDBv2.DataModel;
 
 namespace API.Entities
 {
     public class Order
     {
-        public int Id { get; set; }
-        public DateTime DeliveryTime { get; set; }
-        public IEnumerable<Orderline> Orderlines { get; set; }
+        [DynamoDBHashKey]
+        public string ID { get; set; }
+
+        [DynamoDBRangeKey]
+        public string Sort { get; set; }
         
-        public AppUser User { get; set; }
-        public int UserId { get; set; }
+        public long PaymentDate { get; set; }
+        public string TotalPrice { get; set; }
+        public IEnumerable<Orderline> Orderlines { get; set; }
     }
 }

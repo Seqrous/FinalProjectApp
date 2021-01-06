@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using server.API.DTOs.Products;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Entities
 {
@@ -26,10 +22,10 @@ namespace API.Entities
             Items = items;
         }
 
-        public static async Task<PagingList<T>> CreateList(IQueryable<T> source, int pageNumber, int pageSize)
+        public static PagingList<T> CreateList(IEnumerable<T> source, int pageNumber, int pageSize)
         {
-            var totalCount = await source.CountAsync();
-            var items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            var totalCount = source.Count();
+            var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             return new PagingList<T>(items, totalCount, pageNumber, pageSize);
         }
     }

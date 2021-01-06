@@ -1,7 +1,9 @@
 using API.DTOs.Users;
 using API.Entities;
 using AutoMapper;
-using server.API.DTOs.Products;
+using API.DTOs.Products;
+using API.DTOs.Orders;
+using API.DTOs;
 
 namespace API.Helpers
 {
@@ -15,8 +17,12 @@ namespace API.Helpers
             CreateMap<AppUser, UserDto>();
             CreateMap<ProductDto, Product>();
             CreateMap<Product, ProductDto>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price.ValidPrice));
-            CreateMap<PagingList<Product>,PagedProductDto>();
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ID))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Sort));
+            CreateMap<PagingList<Product>, PagedProductDto>();
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ID));
         }
     }
 }

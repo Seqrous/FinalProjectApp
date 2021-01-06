@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Data;
+using API.DTOs.Orders;
 using API.DTOs.Users;
 using API.Interfaces;
 using AutoMapper;
@@ -11,7 +11,6 @@ namespace API.Controllers
 {
     public class UsersController : BaseApiController
     {
-        public DataContext _context { get; set; }
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         public UsersController(IUserRepository userRepository, IMapper mapper)
@@ -33,13 +32,23 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(string id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
 
             var userToReturn = _mapper.Map<UserDto>(user);
 
             return Ok(userToReturn);
+        }
+
+        [HttpGet("{id}/orders")]
+        public async Task<ActionResult<UserDto>> GetUserOrders(string id)
+        {
+            var orders = await _userRepository.GetUserOrders(id);
+
+            var ordersToReturn = _mapper.Map<IEnumerable<OrderDto>>(orders);
+
+            return Ok(ordersToReturn);
         }
     }
 }
