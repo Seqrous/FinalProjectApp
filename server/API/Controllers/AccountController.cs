@@ -1,20 +1,23 @@
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using API.Data;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService)
+        private readonly IDynamoDBContext _context;
+        public AccountController(ITokenService tokenService, IDynamoDBContext context)
         {
             this._tokenService = tokenService;
             this._context = context;
@@ -24,26 +27,26 @@ namespace API.Controllers
         public async Task<ActionResult<AuthenticationDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.Email)) return BadRequest("Email is taken");
-
             // Hash for password encryption
             using var hmac = new HMACSHA512();
 
             var user = new AppUser
             {
                 // Encrypt the password and save the hash key
+                ID = "USER-" + Guid.NewGuid().ToString(),
                 Email = registerDto.Email,
-                Name = registerDto.Name,
+                Sort = registerDto.Name,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
+
             };
+            await _context.SaveAsync(user);
 
             // Save to the database
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
 
             return new AuthenticationDto
             {
-                Id = user.Id,
+                Id = user.ID,
                 Token = _tokenService.CreateToken(user)
             };
         }
@@ -51,11 +54,17 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<AuthenticationDto>> Login(LoginDto loginDto)
         {
-            // Get the user with the matching email
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email.ToLower());
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Users"
+            };
+            
+            var users = await _context.QueryAsync<AppUser>(loginDto.Email,conf).GetRemainingAsync();
+            var user = users.FirstOrDefault();
 
             if (user == null) return Unauthorized("Invalid email");
-
+            
             // Get the same hash used for encrypting password during registration
             using var hmac = new HMACSHA512(user.PasswordSalt);
 
@@ -69,14 +78,22 @@ namespace API.Controllers
 
             return new AuthenticationDto
             {
-                Id = user.Id,
+                Id = user.ID,
                 Token = _tokenService.CreateToken(user)
             };
         }
 
         private async Task<bool> UserExists(string email)
         {
-            return await _context.Users.AnyAsync(x => x.Email == email);
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Users"
+            };
+            List<ScanCondition> conditions = new List<ScanCondition>();
+            conditions.Add(new ScanCondition("Email", ScanOperator.Equal, email));
+            var users = await _context.ScanAsync<AppUser>(conditions, conf).GetRemainingAsync();
+            return users.Count != 0;
         }
     }
 }

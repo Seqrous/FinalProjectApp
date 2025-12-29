@@ -13,9 +13,9 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy
 {
     collapsed: boolean;
     fuseConfig: any;
+    searchString = '';
 
-    @Output()
-    input: EventEmitter<any>;
+    @Output() inputValue: EventEmitter<any>;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -30,7 +30,7 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy
     )
     {
         // Set the defaults
-        this.input = new EventEmitter();
+        this.inputValue = new EventEmitter();
         this.collapsed = true;
 
         // Set the private defaults
@@ -87,13 +87,20 @@ export class FuseSearchBarComponent implements OnInit, OnDestroy
     }
 
     /**
-     * Search
+     * updateSearch
      *
      * @param event
      */
-    search(event): void
+    updateSearch(event): void
     {
-        this.input.emit(event.target.value);
+        this.searchString = event.target.value;
     }
 
+    /**
+     * Search
+     */
+    search(): void
+    {
+        this.inputValue.emit(this.searchString);
+    }
 }

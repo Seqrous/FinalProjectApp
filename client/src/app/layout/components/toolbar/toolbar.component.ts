@@ -9,6 +9,9 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '@fuse/services/authentication.service';
+import { Router } from '@angular/router';
+import { ShoppingCartService } from 'app/common/services/shopping-cart.service';
+import { Product } from 'app/products/models/product';
 
 @Component({
     selector     : 'toolbar',
@@ -27,6 +30,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
     loggedIn: boolean;
+    productsNumber: number;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -34,15 +38,20 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * Constructor
      *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
+     * @param { FuseConfigService } _fuseConfigService
+     * @param { FuseSidebarService } _fuseSidebarService
+     * @param { TranslateService } _translateService
+     * @param { AuthenticationService } _authService
+     * @param { Router } _router
+     * @param { ShoppingCartService } _shoppingCart
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService,
         public _authService: AuthenticationService,
+        private _router: Router,
+        private _shoppingCart: ShoppingCartService,
     )
     {
         // Set the defaults
@@ -115,6 +124,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this.selectedLanguage = _.find(this.languages, {id: this._translateService.currentLang});
         
         this.getCurrentUser();
+        this.getProducts();
     }
 
     /**
@@ -148,8 +158,11 @@ export class ToolbarComponent implements OnInit, OnDestroy
      */
     search(value): void
     {
-        // Do your search here...
-        console.log(value);
+        const params = {
+            name: value
+        };
+        
+        this._router.navigate(['/products'], { queryParams: params });
     }
 
     /**
@@ -166,7 +179,10 @@ export class ToolbarComponent implements OnInit, OnDestroy
         this._translateService.use(lang.id);
     }
 
-    getCurrentUser(): void{
+    /**
+     * Return the currently logged in user
+     */
+    getCurrentUser(): void {
         this._authService.currentUser$.subscribe(user => {
             this.loggedIn = !!user;
         }, error => {
@@ -174,7 +190,30 @@ export class ToolbarComponent implements OnInit, OnDestroy
         });
     }
 
+    /**
+     * Return the number of the products in the shopping cart
+     */
+    getProducts(): void {
+        this._shoppingCart.cartProducts$.subscribe(products => {
+            this.productsNumber = products.length;
+        }, error => {
+            console.log(error);
+        });
+    }
+
+    /**
+     * Logout
+     */
     logout(): void {
         this._authService.logout();
+    }
+
+    /**
+     * Redirect to a given route
+     * 
+     * @param event 
+     */
+    redirect(event: any): void {
+        this._router.navigate([`${event}`]);
     }
 }

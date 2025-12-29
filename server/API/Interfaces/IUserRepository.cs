@@ -9,7 +9,7 @@ namespace API.Interfaces
         /*
             Updates the user
         */
-        void Update(AppUser user);
+        Task UpdateUser(AppUser user);
         /*
             Saves all the changes asynchronously
         */
@@ -17,10 +17,15 @@ namespace API.Interfaces
         /* 
             Returns a user with the given ID asynchronously
         */
-        Task<AppUser> GetUserByIdAsync(int id);
+        Task<AppUser> GetUserByIdAsync(string id);
         /* 
             Returns all users asynchronously
         */
         Task<IEnumerable<AppUser>> GetUsersAsync();
+
+        /*
+            Get orders specific to a user
+        */
+       
     }
 }

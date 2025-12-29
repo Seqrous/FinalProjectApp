@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Data;
+using API.DTOs.Orders;
 using API.DTOs.Users;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,6 @@ namespace API.Controllers
 {
     public class UsersController : BaseApiController
     {
-        public DataContext _context { get; set; }
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         public UsersController(IUserRepository userRepository, IMapper mapper)
@@ -22,18 +22,17 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<UserDto>> GetAllUsers()
         {
             var users = await _userRepository.GetUsersAsync();
-
+            
             var usersToReturn = _mapper.Map<IEnumerable<UserDto>>(users);
-
             return Ok(usersToReturn);
         }
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(string id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
 

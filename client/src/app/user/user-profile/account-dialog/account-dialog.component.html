@@ -1,0 +1,43 @@
+<div class="dialog-content-wrapper">
+
+  <!-- TOOLBAR -->
+  <mat-toolbar class="mat-accent m-0">
+    <mat-toolbar-row>
+      <span class="span">Change your account information</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <!-- /TOOLBAR -->
+
+  <!-- CONTENT -->
+  <div mat-dialog-content class="p-16 pb-0 m-0">
+    <form name="accountForm" [formGroup]="accountForm">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput name="name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input matInput name="email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>New password</mat-label>
+        <input type="password" matInput name="password" formControlName="password">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Confirm password</mat-label>
+        <input type="password" matInput name="confirmPassword" formControlName="confirmPassword">
+      </mat-form-field>
+    </form>
+  </div>
+  <!-- /CONTENT -->
+
+  <div class="dialog-buttons-wrapper p-16">
+    <div class="dialog-buttons">
+      <button mat-button>Cancel</button>
+      <button mat-raised-button cdkFocusInitial color="accent" class="m-0">Confirm</button>
+    </div>
+  </div>
+</div>

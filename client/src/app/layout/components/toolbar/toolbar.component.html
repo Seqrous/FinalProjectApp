@@ -25,7 +25,7 @@
 
         <div class="toolbar-separator"></div>
 
-        <fuse-search-bar (input)="search($event)"></fuse-search-bar>
+        <fuse-search-bar (inputValue)="search($event)"></fuse-search-bar>
 
         <div class="toolbar-separator"></div>
 
@@ -43,7 +43,7 @@
 
                 <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
 
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="redirect('user/profile')">
                         <mat-icon>account_circle</mat-icon>
                         <span>My Profile</span>
                     </button>
@@ -65,8 +65,11 @@
             <div class="toolbar-separator"></div>
 
             <button mat-button fxHide fxShow.gt-xs
-                    class="shopping-cart-button">
-                    <mat-icon>shopping_cart</mat-icon>
+                    class="shopping-cart-button" (click)="productsNumber > 0 ? toggleSidebarOpen('quickPanel') : true">
+                <div fxLayout="row">
+                    <div class="cart-items accent" *ngIf="productsNumber > 0">{{ productsNumber }}</div>
+                    <mat-icon class="ml-4">shopping_cart</mat-icon>
+                </div>
             </button>
 
             <div class="toolbar-separator"></div>

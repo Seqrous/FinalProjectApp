@@ -1,50 +1,86 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using API.Data;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using API.Entities;
-using Microsoft.EntityFrameworkCore;
-using server.API.Interfaces;
+using API.Helpers;
+using API.Interfaces;
 
 namespace server.API.Data
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly DataContext _context;
-        public ProductRepository(DataContext context)
+        private IQueryable<Product> Products;
+        private DynamoDBContext _context;
+
+        public ProductRepository(IAmazonDynamoDB dynamoDbClient)
         {
-            this._context = context;
+            if (dynamoDbClient == null) throw new ArgumentNullException(nameof(dynamoDbClient));
+            _context = new DynamoDBContext(dynamoDbClient);
         }
 
         public async Task<Product> InsertProduct(Product product)
         {
-            _context.Products.Add(product);
-
-            await SaveAllAsync();
-            
-            return product;
+            throw new System.NotImplementedException();
         }
-        public async Task<Product> GetProductByIdAsync(int id) 
+
+        public async Task<IEnumerable<Product>> GetProductByIdAsync(string id)
         {
-            return await _context.Products.FindAsync(id);
+            var product = await _context.QueryAsync<Product>(id).GetRemainingAsync();
+
+            return product;
         }
 
         public async Task<Product> GetProductByNameAsync(string name)
         {
-            return await _context.Products.FindAsync(name);
-        }
-        public async Task<IEnumerable<Product>> GetAllProductsAsync() 
-        {
-            return await _context.Products.ToListAsync();
+            var conf = new DynamoDBOperationConfig
+            {
+                OverrideTableName = "FinalProject",
+                IndexName = "Products"
+            };
+
+            conf.QueryFilter = new List<ScanCondition>();
+            conf.QueryFilter.Add(new ScanCondition("Sort", ScanOperator.Equal, name));
+
+            var products = await _context.QueryAsync<Product>(name, conf).GetRemainingAsync();
+            var prod = products.FirstOrDefault();
+
+            return prod;
         }
 
-        public async Task<bool> SaveAllAsync()
+        public async Task<PagingList<Product>> GetProductsAsync(PaginationModel productParams)
         {
-            return await _context.SaveChangesAsync() > 0;
+            // Filter records that are products
+            List<ScanCondition> conditions = new List<ScanCondition>();
+            conditions.Add(new ScanCondition("ID", ScanOperator.Contains, "PRODUCT"));
+
+            // Return the products
+            var products = await _context.ScanAsync<Product>(conditions).GetRemainingAsync();
+
+            // Paginate the results
+            return PagingList<Product>.CreateList(products, productParams.PageNumber, productParams.PageSize);
         }
 
         public void Update(Product product)
         {
-            _context.Entry(product).State = EntityState.Modified;
+            throw new System.NotImplementedException();
+        }
+        public async Task UpdateProduct(Product product)
+        {
+            List<ScanCondition> conditions = new List<ScanCondition>();
+            conditions.Add(new ScanCondition("ID", ScanOperator.Equal, product.ID));
+            var products = await _context.ScanAsync<Product>(conditions).GetRemainingAsync();
+            var productsToEdit = products.FirstOrDefault();
+            if (productsToEdit != null)
+            {
+                productsToEdit = product;
+                //Save the new product  
+                await _context.SaveAsync<Product>(productsToEdit);
+            }
+
         }
     }
 }
