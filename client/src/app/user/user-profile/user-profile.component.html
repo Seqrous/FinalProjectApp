@@ -1,0 +1,98 @@
+<div id="profile" class="page-layout simple tabbed">
+
+  <!-- HEADER -->
+  <div class="header p-24">
+      <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+           fxLayoutAlign.gt-sm="start center">
+          <img class="profile-image avatar huge" src="assets/images/avatars/Velazquez.jpg">
+          <div class="name">
+              Charlie Adams
+          </div>
+          <button mat-raised-button color="accent" class="change-avatar">Change avatar</button>
+      </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+
+  <div id="about" class="p-24">
+
+    <div class="profile-box info-box general" fxLayout="column">
+      <header class="accent">
+          <div class="title">Billing address</div>
+          <button mat-icon-button (click)="openDialog('address-dialog')">
+            <mat-icon>edit</mat-icon>
+          </button>
+      </header>
+
+      <div class="content">
+
+        <div class="info-line">
+          <div class="title">Name</div>
+          <div class="info">Charlie Adams</div>
+        </div>
+
+        <div class="info-line">
+            <div class="title">Street address</div>
+            <div class="info">Danmarksgade 76</div>
+        </div>
+
+        <div class="info-line">
+            <div class="title">Country</div>
+            <div class="info">Denmark</div>
+        </div>
+
+        <div class="info-line">
+          <div class="title">City</div>
+          <div class="info">Aalborg</div>
+        </div>
+
+        <div class="info-line">
+          <div class="title">Postal code</div>
+          <div class="info">9000</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-box info-box general" fxLayout="column">
+      <header class="accent">
+          <div class="title">User Information</div>
+          <button mat-icon-button (click)="openDialog('account-dialog')">
+            <mat-icon>edit</mat-icon>
+          </button>
+      </header>
+
+      <div class="content">
+        <div class="info-line">
+          <div class="title">E-mail address</div>
+          <div class="info">whatever@gmail.com</div>
+        </div>
+
+        <div class="info-line">
+            <div class="title">Name</div>
+            <div class="info">My name goes here</div>
+        </div>
+
+        <div class="info-line">
+            <div class="title">Password</div>
+            <div class="info">********</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-box info-box general" fxLayout="column">
+      <header class="accent">
+          <div class="title">Your orders</div>
+      </header>
+
+      <div class="content">
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- / CONTENT -->
+
+</div>

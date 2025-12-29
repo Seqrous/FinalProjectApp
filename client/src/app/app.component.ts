@@ -16,6 +16,8 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { User } from './user/models/user';
 import { AuthenticationService } from '@fuse/services/authentication.service';
+import { ShoppingCartService } from './common/services/shopping-cart.service';
+import { Product } from './products/models/product';
 
 @Component({
     selector   : 'app',
@@ -32,15 +34,17 @@ export class AppComponent implements OnInit, OnDestroy
 
     /**
      * Constructor
-     *
-     * @param {DOCUMENT} document
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseNavigationService} _fuseNavigationService
-     * @param {FuseSidebarService} _fuseSidebarService
+     * 
+     * @param document 
+     * @param _fuseConfigService 
+     * @param _fuseNavigationService 
+     * @param _fuseSidebarService 
      * @param {FuseSplashScreenService} _fuseSplashScreenService
-     * @param {FuseTranslationLoaderService} _fuseTranslationLoaderService
-     * @param {Platform} _platform
-     * @param {TranslateService} _translateService
+     * @param _fuseTranslationLoaderService 
+     * @param _translateService 
+     * @param _platform 
+     * @param _authService 
+     * @param _shoppingCartService 
      */
     constructor(
         @Inject(DOCUMENT) private document: any,
@@ -52,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         private _platform: Platform,
         private _authService: AuthenticationService,
+        private _shoppingCartService: ShoppingCartService,
     )
     {
         // Get default navigation
@@ -159,6 +164,7 @@ export class AppComponent implements OnInit, OnDestroy
             });
         
         this.setCurrentUser();
+        this.setCartProducts();
     }
 
     /**
@@ -185,10 +191,24 @@ export class AppComponent implements OnInit, OnDestroy
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    setCurrentUser(): void {
+    // -----------------------------------------------------------------------------------------------------
+    // @ Private methods
+    // -----------------------------------------------------------------------------------------------------
+
+    private setCurrentUser(): void {
         const id = JSON.parse(localStorage.getItem('id'));
         this._authService.getCurrentUser(id).subscribe((user: User) => {
             this._authService.setCurrentUser(user);
+        }, err => {
+            console.log(err);
+        });
+    }
+
+    private setCartProducts(): void {
+        const products = JSON.parse(localStorage.getItem('products'));
+        if (!products) { return; }
+        products.forEach(product => {
+            this._shoppingCartService.addProduct(new Product(product));
         }, err => {
             console.log(err);
         });

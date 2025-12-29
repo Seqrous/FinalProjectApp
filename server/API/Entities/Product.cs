@@ -1,26 +1,18 @@
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Amazon.DynamoDBv2.DataModel;
 
 namespace API.Entities
 {
+    [DynamoDBTable("FinalProject")]
     public class Product
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; } 
-        public int Quantity { get; set; }
-        public string Category { get; set; }
-        public string Manufacturer { get; set; }
-        public string Description { get; set; }
-        public ICollection<ProductPhoto> Photos { get; set; }
-    }
+        [DynamoDBHashKey]
+        public string ID { get; set; }
 
-    public class ProductEntityConfiguration : IEntityTypeConfiguration<Product>
-    {
-        public void Configure(EntityTypeBuilder<Product> builder)
-        {
-            builder.HasMany<ProductPhoto>(p => p.Photos).WithOne().OnDelete(DeleteBehavior.Cascade);
-        }
+        [DynamoDBRangeKey]
+        public string Sort { get; set; }
+        
+        public string Price { get; set; }
+        public string Category { get; set; }
+        public string Gallery { get; set; }
     }
 }

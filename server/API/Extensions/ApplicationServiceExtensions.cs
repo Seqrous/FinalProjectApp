@@ -1,13 +1,12 @@
+using Amazon.DynamoDBv2;
 using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using server.API.Data;
-using server.API.Interfaces;
 
 namespace API.Extensions
 {
@@ -22,11 +21,9 @@ namespace API.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-            services.AddDbContext<DataContext>(options => 
-            {
-               options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
-            });
+            services.AddAWSService<IAmazonDynamoDB>(config.GetAWSOptions("DynamoDb"));
             services.AddCors();
+            services.AddHealthChecks();
 
             return services;
         }

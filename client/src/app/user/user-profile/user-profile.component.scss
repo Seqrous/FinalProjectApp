@@ -1,0 +1,104 @@
+@import "src/@fuse/scss/fuse";
+
+#profile {
+
+    .header {
+        height: 250px;
+        min-height: 250px;
+        max-height: 250px;
+        background: url('/assets/images/backgrounds/dark-material-bg.jpg') no-repeat 0 45%;
+        background-size: cover;
+        display: flex;
+        align-items: flex-end;
+
+        .user-info {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .profile-image {
+                margin-right: 24px;
+
+                @include media-breakpoint('sm') {
+                    margin: 0 0 16px 0;
+                }
+            }
+
+            .name {
+                flex: 1;
+                font-size: 34px;
+                color: #FFFFFF;
+
+                @include media-breakpoint('sm') {
+                    margin-bottom: 32px;
+                }
+            }
+
+            .change-avatar {
+                text-align: center;
+                width: 130px !important;
+                height: 40px !important;
+                min-width: unset !important;
+                min-height: unset !important;
+            }
+        }
+    }
+
+    #about {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        width: 80%;
+        margin: auto;
+
+        .profile-box {
+            flex: 1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            @include mat-elevation(2);
+    
+            header {
+                padding: 16px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+    
+                .title {
+                    line-height: 40px;
+                    height: 40px;
+                    font-size: 17px;
+                    flex: 1;
+                }
+            }
+    
+            .content {
+                padding: 16px;
+            }
+    
+            footer {
+                padding: 8px;
+                border-top: 1px solid;
+            }
+    
+            &.info-box {
+    
+                .info-line {
+                    margin-bottom: 24px;
+    
+                    .title {
+                        font-size: 15px;
+                        font-weight: 600;
+                        padding-bottom: 4px;
+                    }
+    
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
